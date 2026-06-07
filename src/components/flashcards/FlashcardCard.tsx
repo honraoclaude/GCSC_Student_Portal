@@ -5,7 +5,7 @@ import { useState } from "react";
 interface FlashcardCardProps {
   front: string;
   back: string;
-  hint?: string;
+  hint?: string | null;
   onFlip?: (isFlipped: boolean) => void;
 }
 
