@@ -13,14 +13,15 @@ const OnboardingSchema = z.object({
 });
 
 export async function POST(req: Request) {
-
   try {
     const body = await req.json();
-    const data = OnboardingSchema.parse(body);
 
-    // Get userId from request body (sent by client)
     if (!body.userId) {
-      return new Response("Missing userId", { status: 400 });
+      return new Response(JSON.stringify({ error: "Missing userId" }), { status: 400, headers: { "Content-Type": "application/json" } });
+    }
+
+    if (!body.displayName || !body.yearGroup || !body.subjects) {
+      return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400, headers: { "Content-Type": "application/json" } });
     }
 
     const user = await prisma.user.findUnique({
@@ -29,7 +30,7 @@ export async function POST(req: Request) {
     });
 
     if (!user?.studentProfile) {
-      return new Response("Student profile not found", { status: 404 });
+      return new Response(JSON.stringify({ error: "Student profile not found" }), { status: 404, headers: { "Content-Type": "application/json" } });
     }
 
     const profileId = user.studentProfile.id;
@@ -37,28 +38,28 @@ export async function POST(req: Request) {
     await prisma.studentProfile.update({
       where: { id: profileId },
       data: {
-        displayName: data.displayName,
-        yearGroup: data.yearGroup,
+        displayName: body.displayName,
+        yearGroup: body.yearGroup,
         consentGiven: true,
         consentDate: new Date(),
       },
     });
 
     await Promise.all(
-      data.subjects.map((subject) =>
+      body.subjects.map((subject: any) =>
         prisma.subjectEnrollment.create({
           data: {
             studentProfileId: profileId,
-            subject: subject.subject as any,
-            targetGrade: subject.targetGrade as any,
+            subject: subject.subject,
+            targetGrade: subject.targetGrade,
           },
         })
       )
     );
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    return new Response(JSON.stringify({ success: true }), { status: 200, headers: { "Content-Type": "application/json" } });
   } catch (error) {
     console.error("Onboarding error:", error);
-    return new Response("Onboarding failed", { status: 500 });
+    return new Response(JSON.stringify({ error: String(error) }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
 }
