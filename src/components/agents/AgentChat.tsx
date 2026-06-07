@@ -55,51 +55,31 @@ export function AgentChat({
         }),
       });
 
-      if (!response.ok) throw new Error("Failed to get response");
-
-      const reader = response.body?.getReader();
-      if (!reader) throw new Error("No response body");
-
-      let assistantMessage = "";
-      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
-
-      const decoder = new TextDecoder();
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\n");
-
-        for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            const data = line.slice(6);
-            if (data === "[DONE]") continue;
-
-            try {
-              const parsed = JSON.parse(data);
-              if (parsed.text) {
-                assistantMessage += parsed.text;
-                setMessages((prev) => {
-                  const updated = [...prev];
-                  updated[updated.length - 1].content = assistantMessage;
-                  return updated;
-                });
-              }
-            } catch {
-              // Ignore parse errors
-            }
-          }
-        }
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || "Failed to get response");
       }
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: data.text || "No response received",
+        },
+      ]);
     } catch (error) {
       console.error("Chat error:", error);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content:
-            "Sorry, I encountered an error. Please try again. 😊",
+          content: `Sorry, I encountered an error: ${error instanceof Error ? error.message : "Unknown error"}. Please try again. 😊`,
         },
       ]);
     } finally {

@@ -22,59 +22,53 @@ export async function POST(req: Request) {
       }
     }
 
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return new Response(JSON.stringify({ error: "ANTHROPIC_API_KEY not configured" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
     const { Anthropic } = await import("@anthropic-ai/sdk");
     const client = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
-    const encoder = new TextEncoder();
-
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          const response = await client.messages.create({
-            model: "claude-3-5-sonnet-20241022",
-            max_tokens: 1024,
-            system: systemPrompt,
-            messages: [
-              {
-                role: "user",
-                content: message,
-              },
-            ],
-            stream: true,
-          });
-
-          for await (const event of response as any) {
-            if (event.type === "content_block_delta" && event.delta?.type === "text_delta") {
-              const chunk = `data: ${JSON.stringify({ text: event.delta.text })}\n\n`;
-              controller.enqueue(encoder.encode(chunk));
-            }
-          }
-
-          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
-          controller.close();
-        } catch (error) {
-          console.error("Anthropic stream error:", error);
-          const errorChunk = `data: ${JSON.stringify({ error: String(error) })}\n\n`;
-          controller.enqueue(encoder.encode(errorChunk));
-          controller.close();
-        }
-      },
+    // Non-streaming version first to verify it works
+    const response = await client.messages.create({
+      model: "claude-3-5-sonnet-20241022",
+      max_tokens: 1024,
+      system: systemPrompt,
+      messages: [
+        {
+          role: "user",
+          content: message,
+        },
+      ],
     });
 
-    return new Response(stream, {
-      headers: {
-        "Content-Type": "text/event-stream",
-        "Cache-Control": "no-cache",
-        Connection: "keep-alive",
-      },
-    });
+    const text = response.content[0]?.type === "text" ? response.content[0].text : "";
+
+    return new Response(
+      JSON.stringify({
+        text: text,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   } catch (error) {
     console.error("Chat error:", error);
-    return new Response(JSON.stringify({ error: String(error) }), {
-      status: 500,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        error: String(error),
+        details: error instanceof Error ? error.message : "Unknown error",
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
   }
 }
