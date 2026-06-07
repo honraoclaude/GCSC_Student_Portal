@@ -26,36 +26,53 @@ export function SubjectCard({ subject, targetGrade, currentGrade }: SubjectCardP
 
   return (
     <Link href={`/agents/tutor/${subject.toLowerCase()}`}>
-      <div className="group rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 transition-all hover:border-blue-400 hover:shadow-lg dark:hover:border-blue-600 cursor-pointer">
-        <div className="flex items-start justify-between">
-          <div>
-            <div className="text-3xl">{emoji}</div>
-            <h3 className="mt-3 font-semibold text-slate-900 dark:text-white">
-              {displayName}
-            </h3>
-          </div>
-          <div className="text-right text-sm">
-            <div className="font-semibold text-blue-600 dark:text-blue-400">
-              {currentGrade || "—"}
-            </div>
-            <div className="text-xs text-slate-600 dark:text-slate-400">
-              Target: {targetGrade.replace("GRADE_", "")}
-            </div>
-          </div>
-        </div>
+      <div className="group relative rounded-2xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-6 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 dark:from-blue-500/10 dark:to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        <div className="mt-4">
-          <div className="h-2 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
-            <div
-              className="h-full bg-gradient-to-r from-blue-500 to-cyan-500"
-              style={{ width: "45%" }}
-            />
+        <div className="relative z-10">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/40 dark:to-cyan-900/40">
+                <span className="text-2xl">{emoji}</span>
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900 dark:text-white text-sm leading-tight">
+                  {displayName}
+                </h3>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="mt-4 flex items-center gap-2 text-sm text-blue-600 dark:text-blue-400 group-hover:gap-3 transition-all">
-          <span>Ask tutor</span>
-          <span>→</span>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3 flex-1">
+                <div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-1">
+                    Current
+                  </p>
+                  <p className="text-lg font-bold text-slate-900 dark:text-white">
+                    {currentGrade || "—"}
+                  </p>
+                </div>
+                <div className="h-8 w-px bg-slate-200 dark:bg-slate-700" />
+                <div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-1">
+                    Target
+                  </p>
+                  <p className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400 bg-clip-text text-transparent">
+                    {targetGrade.replace("GRADE_", "")}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
+              <div className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
+                <span>Chat with tutor</span>
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </Link>

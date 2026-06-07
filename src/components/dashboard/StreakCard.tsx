@@ -14,31 +14,46 @@ export function StreakCard({ currentStreak, longestStreak }: StreakCardProps) {
   };
 
   return (
-    <div className="rounded-lg border border-orange-200 dark:border-orange-900 bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-950 dark:to-yellow-950 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
-            Current Streak
-          </h3>
-          <p className="mt-2 text-5xl font-bold text-orange-600 dark:text-orange-400">
-            {currentStreak}
-          </p>
-          <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">
-            days in a row
-          </p>
-          <p className="mt-3 text-sm font-medium text-orange-700 dark:text-orange-300">
+    <div className="group relative rounded-2xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-8 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-amber-500/5 dark:from-orange-500/10 dark:to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+      <div className="relative z-10 flex items-start justify-between">
+        <div className="flex-1">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-orange-100 dark:bg-orange-900/30 mb-6">
+            <span className="text-xs font-bold text-orange-700 dark:text-orange-300 uppercase tracking-wider">
+              🔥 Streak
+            </span>
+          </div>
+
+          <div className="mb-8">
+            <p className="text-7xl font-black bg-gradient-to-r from-orange-600 to-amber-500 dark:from-orange-400 dark:to-amber-300 bg-clip-text text-transparent">
+              {currentStreak}
+            </p>
+            <p className="mt-2 text-sm font-semibold text-slate-600 dark:text-slate-400">
+              days in a row
+            </p>
+          </div>
+
+          <p className="text-base font-medium text-slate-700 dark:text-slate-300 mb-6">
             {getMotivationalMessage(currentStreak)}
           </p>
+
+          {longestStreak > currentStreak && (
+            <div className="pt-6 border-t border-slate-200 dark:border-slate-700">
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                Personal best:
+                <span className="ml-2 font-bold text-slate-900 dark:text-white">
+                  {longestStreak} days
+                </span>
+              </p>
+            </div>
+          )}
         </div>
-        <div className="text-7xl">🔥</div>
+
+        <div className="text-8xl opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
+          🔥
+        </div>
       </div>
-      {longestStreak > currentStreak && (
-        <div className="mt-4 border-t border-orange-200 dark:border-orange-900 pt-4">
-          <p className="text-xs text-slate-600 dark:text-slate-400">
-            Personal best: <span className="font-semibold text-orange-700 dark:text-orange-300">{longestStreak} days</span>
-          </p>
-        </div>
-      )}
     </div>
   );
 }
