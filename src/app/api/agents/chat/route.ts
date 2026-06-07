@@ -20,6 +20,12 @@ export async function POST(req: Request) {
       if (subject) {
         systemPrompt += `\n\nYou are specifically tutoring the student in: ${subject.replace(/_/g, " ")}`;
       }
+    } else if (agentType === "REVISION") {
+      const { revisionConfig } = await import("@/lib/ai/agents/revision");
+      systemPrompt = revisionConfig.systemPrompt;
+    } else if (agentType === "EXAM_PREP") {
+      const { examPrepConfig } = await import("@/lib/ai/agents/exam-prep");
+      systemPrompt = examPrepConfig.systemPrompt;
     }
 
     if (!process.env.ANTHROPIC_API_KEY) {

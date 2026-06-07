@@ -95,55 +95,81 @@ export default async function DashboardPage() {
       {/* ===== QUICK ACTIONS ===== */}
       <div className="space-y-4">
         <h2 className="text-2xl font-bold text-slate-900 dark:text-white">⚡ Quick Actions</h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {/* AI Tutors */}
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
+          {/* Success Coach */}
           <Link href="/agents/success">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-6 hover:border-indigo-400/50 dark:hover:border-indigo-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-3">🤖</p>
-              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                AI Tutors
+            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-indigo-400/50 dark:hover:border-indigo-400/50 transition-all cursor-pointer hover:shadow-lg">
+              <p className="text-3xl mb-2">🎯</p>
+              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-sm">
+                Success Coach
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                Chat with your personal AI tutors
+                Study plans
+              </p>
+            </div>
+          </Link>
+
+          {/* Revision Planner */}
+          <Link href="/agents/revision">
+            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-blue-400/50 dark:hover:border-blue-400/50 transition-all cursor-pointer hover:shadow-lg">
+              <p className="text-3xl mb-2">🔄</p>
+              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-sm">
+                Revision Planner
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+                Exam prep
+              </p>
+            </div>
+          </Link>
+
+          {/* Exam Coach */}
+          <Link href="/agents/exam-prep">
+            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-green-400/50 dark:hover:border-green-400/50 transition-all cursor-pointer hover:shadow-lg">
+              <p className="text-3xl mb-2">📝</p>
+              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors text-sm">
+                Exam Coach
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
+                Mock exams
               </p>
             </div>
           </Link>
 
           {/* Flashcards */}
           <Link href="/learning-hub/flashcards">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-6 hover:border-purple-400/50 dark:hover:border-purple-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-3">🎴</p>
-              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-purple-400/50 dark:hover:border-purple-400/50 transition-all cursor-pointer hover:shadow-lg">
+              <p className="text-3xl mb-2">🎴</p>
+              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors text-sm">
                 Flashcards
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                Learn with spaced repetition
+                Spaced repetition
               </p>
             </div>
           </Link>
 
-          {/* Learning Hub */}
-          <Link href="/learning-hub">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-6 hover:border-green-400/50 dark:hover:border-green-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-3">📚</p>
-              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-                Learning Hub
+          {/* Practice Papers */}
+          <Link href="/learning-hub/practice-papers">
+            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-emerald-400/50 dark:hover:border-emerald-400/50 transition-all cursor-pointer hover:shadow-lg">
+              <p className="text-3xl mb-2">📋</p>
+              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors text-sm">
+                Practice Papers
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                All learning resources
+                Mock exams
               </p>
             </div>
           </Link>
 
           {/* Achievements */}
           <Link href="/achievements">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-6 hover:border-amber-400/50 dark:hover:border-amber-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-3">🏆</p>
-              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-amber-400/50 dark:hover:border-amber-400/50 transition-all cursor-pointer hover:shadow-lg">
+              <p className="text-3xl mb-2">🏆</p>
+              <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors text-sm">
                 Achievements
               </h3>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                View your badges & stats
+                Badges & stats
               </p>
             </div>
           </Link>

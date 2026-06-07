@@ -18,7 +18,7 @@ export default function LearningHubPage() {
       </div>
 
       {/* Feature Cards */}
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
         {/* Flashcards - Active */}
         <Link href="/learning-hub/flashcards">
           <SectionCard
@@ -33,6 +33,26 @@ export default function LearningHubPage() {
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold group-hover:gap-3 transition-all">
                 <span>Start studying</span>
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </div>
+            </div>
+          </SectionCard>
+        </Link>
+
+        {/* Practice Papers - Active */}
+        <Link href="/learning-hub/practice-papers">
+          <SectionCard
+            icon="📋"
+            title="Practice Papers"
+            description="Realistic GCSE mock exams with instant feedback"
+            variant="glass"
+            className="group relative p-8 cursor-pointer overflow-hidden h-full hover:border-emerald-400/50 transition-all"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-500/20 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-300" />
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold group-hover:gap-3 transition-all">
+                <span>Take a mock exam</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </div>

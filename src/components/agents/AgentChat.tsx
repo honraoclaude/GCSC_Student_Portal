@@ -9,7 +9,7 @@ interface Message {
 }
 
 interface AgentChatProps {
-  agentType: "STUDENT_SUCCESS" | "SUBJECT_TUTOR";
+  agentType: "STUDENT_SUCCESS" | "SUBJECT_TUTOR" | "REVISION" | "EXAM_PREP";
   subject?: string;
   agentName: string;
   agentEmoji: string;
@@ -113,6 +113,10 @@ export function AgentChat({
               <p className="text-slate-600 dark:text-slate-400">
                 {agentType === "STUDENT_SUCCESS"
                   ? "Ask me about study plans, motivation, or how to tackle your subjects!"
+                  : agentType === "REVISION"
+                  ? "Ask me to create a revision plan, break down topics, or generate flashcards!"
+                  : agentType === "EXAM_PREP"
+                  ? "Ask me for mock questions, to check your answers, or for exam strategy tips!"
                   : "Ask me anything about this subject. I'll explain it clearly!"}
               </p>
             </div>
