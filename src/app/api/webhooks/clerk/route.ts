@@ -1,9 +1,9 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { prisma } from "@/lib/db/prisma";
 
 export async function POST(req: Request) {
+  const { prisma } = await import("@/lib/db/prisma");
   const headerPayload = await headers();
   const svix_id = headerPayload.get("svix-id");
   const svix_timestamp = headerPayload.get("svix-timestamp");
