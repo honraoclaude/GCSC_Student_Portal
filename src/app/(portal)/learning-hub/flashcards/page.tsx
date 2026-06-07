@@ -37,17 +37,17 @@ export default async function FlashcardsHubPage() {
     <div className="space-y-8">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="space-y-2">
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
               📚 Flashcards
             </h1>
-            <p className="mt-2 text-slate-600 dark:text-slate-400">
-              Create decks and study with spaced repetition
+            <p className="text-slate-600 dark:text-slate-400">
+              Create decks and master any subject with SM-2 spaced repetition
             </p>
           </div>
           <Link href="/learning-hub/flashcards/new">
-            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">
+            <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold px-6 py-2.5 rounded-lg shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all">
               + New Deck
             </Button>
           </Link>
@@ -56,31 +56,29 @@ export default async function FlashcardsHubPage() {
 
       {/* Stats */}
       {decks.length > 0 && (
-        <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-6">
-            <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-              Total Decks
-            </p>
-            <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">
-              {decks.length}
-            </p>
-          </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-6">
-            <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-              Total Cards
-            </p>
-            <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">
-              {decks.reduce((sum, d) => sum + d.cards.length, 0)}
-            </p>
-          </div>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-6">
-            <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-              Study Ready
-            </p>
-            <p className="mt-2 text-3xl font-bold text-green-600 dark:text-green-400">
-              {decks.filter((d) => d.cards.length > 0).length}
-            </p>
-          </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          {[
+            { label: "Total Decks", value: decks.length, icon: "📚", color: "from-indigo-500 to-blue-500" },
+            { label: "Total Cards", value: decks.reduce((sum, d) => sum + d.cards.length, 0), icon: "🎴", color: "from-purple-500 to-indigo-500" },
+            { label: "Study Ready", value: decks.filter((d) => d.cards.length > 0).length, icon: "✅", color: "from-green-500 to-emerald-500" },
+          ].map((stat, i) => (
+            <div
+              key={i}
+              className="rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-6 hover:border-white/20 dark:hover:border-white/20 transition-all"
+            >
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                    {stat.label}
+                  </p>
+                  <p className={`mt-2 text-4xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
+                    {stat.value}
+                  </p>
+                </div>
+                <span className="text-3xl">{stat.icon}</span>
+              </div>
+            </div>
+          ))}
         </div>
       )}
 
