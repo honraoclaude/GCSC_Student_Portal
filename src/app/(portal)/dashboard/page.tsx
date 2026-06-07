@@ -1,6 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db/prisma";
+import { StreakCard } from "@/components/dashboard/StreakCard";
+import { XPBar } from "@/components/dashboard/XPBar";
+import { SubjectCard } from "@/components/dashboard/SubjectCard";
 
 export default async function DashboardPage() {
   const { userId } = await auth();
@@ -11,7 +14,13 @@ export default async function DashboardPage() {
 
   const user = await prisma.user.findUnique({
     where: { clerkId: userId },
-    include: { studentProfile: true },
+    include: {
+      studentProfile: {
+        include: {
+          subjectEnrollments: true,
+        },
+      },
+    },
   });
 
   if (!user?.studentProfile) {
@@ -19,6 +28,7 @@ export default async function DashboardPage() {
   }
 
   const profile = user.studentProfile;
+  const subjects = profile.subjectEnrollments || [];
 
   return (
     <div className="space-y-8">
@@ -31,46 +41,31 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-          <h3 className="font-semibold text-slate-900 dark:text-white">
-            🔥 Streak
-          </h3>
-          <p className="mt-2 text-3xl font-bold text-blue-600">
-            {profile.currentStreak}
-          </p>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            days in a row
-          </p>
-        </div>
-
-        <div className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-          <h3 className="font-semibold text-slate-900 dark:text-white">
-            ⭐ Level
-          </h3>
-          <p className="mt-2 text-3xl font-bold text-purple-600">
-            {profile.level}
-          </p>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            {profile.totalXP} XP total
-          </p>
-        </div>
-
-        <div className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6">
-          <h3 className="font-semibold text-slate-900 dark:text-white">
-            📚 Subjects
-          </h3>
-          <p className="mt-2 text-3xl font-bold text-green-600">0</p>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
-            enrolled subjects
-          </p>
-        </div>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <StreakCard currentStreak={profile.currentStreak} longestStreak={profile.longestStreak} />
+        <XPBar currentXP={profile.totalXP} level={profile.level} />
       </div>
+
+      {subjects.length > 0 && (
+        <div>
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
+            Your Subjects
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {subjects.map((enrollment) => (
+              <SubjectCard
+                key={enrollment.id}
+                subject={enrollment.subject}
+                targetGrade={enrollment.targetGrade}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="rounded-lg border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950 p-6">
         <p className="text-sm text-blue-900 dark:text-blue-200">
-          👋 Welcome to GCSC Student Hub! Start by selecting your subjects to
-          unlock personalized AI tutoring and study planning.
+          💡 Tip: Click on any subject to chat with your AI tutor and get personalized help!
         </p>
       </div>
     </div>
