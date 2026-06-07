@@ -27,12 +27,12 @@ export async function POST(req: Request) {
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
-    // Stream response using SSE format
+    // Create streaming response
     const encoder = new TextEncoder();
     const responseBody = new ReadableStream({
       async start(controller) {
         try {
-          const stream = await client.messages.stream({
+          const stream = client.messages.create({
             model: "claude-3-5-sonnet-20241022",
             max_tokens: 1024,
             system: systemPrompt,
@@ -42,16 +42,13 @@ export async function POST(req: Request) {
                 content: message,
               },
             ],
-          });
+            stream: true,
+          }) as any;
 
-          for await (const chunk of stream) {
-            if (
-              chunk.type === "content_block_delta" &&
-              chunk.delta?.type === "text_delta"
-            ) {
-              const text = chunk.delta.text || "";
-              const data = `data: ${JSON.stringify({ text })}\n\n`;
-              controller.enqueue(encoder.encode(data));
+          for await (const event of stream) {
+            if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
+              const text = event.delta.text;
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`));
             }
           }
 
@@ -59,8 +56,9 @@ export async function POST(req: Request) {
           controller.close();
         } catch (error) {
           console.error("Stream error:", error);
-          const errorData = `data: ${JSON.stringify({ error: String(error) })}\n\n`;
-          controller.enqueue(encoder.encode(errorData));
+          controller.enqueue(
+            encoder.encode(`data: ${JSON.stringify({ error: String(error) })}\n\n`)
+          );
           controller.close();
         }
       },
