@@ -4,46 +4,104 @@ import { AgentChat } from "@/components/agents/AgentChat";
 
 export default function SuccessCoachPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-          Student Success Coach
-        </h1>
-        <p className="mt-2 text-slate-600 dark:text-slate-400">
-          Your personal academic coach — get study plans, motivation, and guidance tailored to your goals.
-        </p>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <div className="text-4xl">🎯</div>
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
+              Success Coach
+            </h1>
+            <p className="mt-1 text-slate-600 dark:text-slate-400">
+              Get personalized study plans, motivation, and academic guidance
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      {/* Main Grid */}
+      <div className="grid gap-8 lg:grid-cols-3">
+        {/* Chat Area */}
         <div className="lg:col-span-2">
-          <AgentChat
-            agentType="STUDENT_SUCCESS"
-            agentName="Success Coach"
-            agentEmoji="🎯"
-          />
+          <div className="rounded-2xl border border-white/10 dark:border-white/10 bg-white/5 dark:bg-white/5 backdrop-blur-xl overflow-hidden shadow-2xl">
+            <AgentChat
+              agentType="STUDENT_SUCCESS"
+              agentName="Success Coach"
+              agentEmoji="🎯"
+            />
+          </div>
         </div>
 
+        {/* Sidebar */}
         <div className="space-y-4">
-          <div className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
-            <h3 className="font-semibold text-slate-900 dark:text-white mb-3">
-              Try asking about:
-            </h3>
-            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-              <li>• "I'm struggling with Chemistry. Create a 2-week plan."</li>
-              <li>• "How can I improve my Maths grades?"</li>
-              <li>• "What should I focus on this week?"</li>
-              <li>• "Am I on track for my target grades?"</li>
-              <li>• "I'm feeling overwhelmed. Help!"</li>
+          {/* Suggestions Card */}
+          <div className="rounded-2xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/10 to-white/5 dark:from-white/10 dark:to-white/5 backdrop-blur-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-2xl">💬</span>
+              <h3 className="font-semibold text-slate-900 dark:text-white">
+                Try asking:
+              </h3>
+            </div>
+            <ul className="space-y-3">
+              {[
+                "Create a 2-week Chemistry plan",
+                "How to improve Maths grades?",
+                "What should I focus on?",
+                "Am I on track?",
+                "I'm overwhelmed, help!",
+              ].map((question, i) => (
+                <li
+                  key={i}
+                  className="text-sm text-slate-600 dark:text-slate-300 flex items-start gap-2 group"
+                >
+                  <span className="text-indigo-500 group-hover:text-indigo-400 transition-colors">
+                    →
+                  </span>
+                  <span>"{question}"</span>
+                </li>
+              ))}
             </ul>
           </div>
 
-          <div className="rounded-lg border border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-950 p-4">
-            <h3 className="font-semibold text-green-900 dark:text-green-200 mb-2">
-              💡 Tip
-            </h3>
-            <p className="text-xs text-green-800 dark:text-green-300">
-              The more details you share about your subjects and targets, the better personalized advice I can give you!
+          {/* Tip Card */}
+          <div className="rounded-2xl border border-amber-200/30 dark:border-amber-200/20 bg-gradient-to-br from-amber-50/50 to-orange-50/50 dark:from-amber-950/30 dark:to-orange-950/30 backdrop-blur p-6 shadow-lg">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl flex-shrink-0">💡</span>
+              <div>
+                <h4 className="font-semibold text-amber-900 dark:text-amber-200 mb-1">
+                  Pro Tip
+                </h4>
+                <p className="text-sm text-amber-800 dark:text-amber-300">
+                  Share details about your subjects and targets for personalized advice that actually works.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Features */}
+          <div className="space-y-2 text-sm">
+            <p className="text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
+              What you can get help with
             </p>
+            <div className="space-y-2">
+              {[
+                { icon: "📋", text: "Study plans" },
+                { icon: "📈", text: "Grade targets" },
+                { icon: "⏰", text: "Time management" },
+                { icon: "💪", text: "Motivation" },
+              ].map((item, i) => (
+                <div
+                  key={i}
+                  className="flex items-center gap-2 p-2 rounded-lg bg-white/5 dark:bg-white/5 hover:bg-white/10 dark:hover:bg-white/10 transition-all"
+                >
+                  <span className="text-lg">{item.icon}</span>
+                  <span className="text-slate-700 dark:text-slate-300">
+                    {item.text}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
