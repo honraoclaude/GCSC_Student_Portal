@@ -2,39 +2,13 @@ import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db/prisma";
 import { z } from "zod";
 
-const GCSE_SUBJECTS = [
-  "MATHS",
-  "ENGLISH_LANGUAGE",
-  "ENGLISH_LITERATURE",
-  "PHYSICS",
-  "CHEMISTRY",
-  "BIOLOGY",
-  "COMPUTER_SCIENCE",
-  "ECONOMICS",
-  "BUSINESS",
-  "GEOGRAPHY",
-  "HISTORY",
-] as const;
-
-const GRADES = [
-  "GRADE_1",
-  "GRADE_2",
-  "GRADE_3",
-  "GRADE_4",
-  "GRADE_5",
-  "GRADE_6",
-  "GRADE_7",
-  "GRADE_8",
-  "GRADE_9",
-] as const;
-
 const OnboardingSchema = z.object({
   displayName: z.string().min(1),
   yearGroup: z.enum(["YEAR_9", "YEAR_10", "YEAR_11"]),
   subjects: z.array(
     z.object({
-      subject: z.enum(GCSE_SUBJECTS),
-      targetGrade: z.enum(GRADES),
+      subject: z.string(),
+      targetGrade: z.string(),
     })
   ),
 });
