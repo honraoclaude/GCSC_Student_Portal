@@ -1,4 +1,5 @@
 import React from "react";
+import { textMuted, cn } from "@/styles";
 
 interface PageHeaderProps {
   title: string;
@@ -23,7 +24,7 @@ export function PageHeader({
             {title}
           </h1>
           {description && (
-            <p className="mt-2 text-slate-600 dark:text-slate-400">
+            <p className={cn("mt-2", textMuted)}>
               {description}
             </p>
           )}

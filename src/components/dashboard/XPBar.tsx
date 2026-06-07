@@ -1,3 +1,5 @@
+import { cardElevated, badgePrimary, textMuted, cn } from "@/styles";
+
 interface XPBarProps {
   currentXP: number;
   level: number;
@@ -15,16 +17,17 @@ export function XPBar({ currentXP, level }: XPBarProps) {
   const progress = Math.min((xpInCurrentLevel / xpNeededForNext) * 100, 100);
 
   return (
-    <div className="group relative rounded-2xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-8 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+    <div className={cn(
+      cardElevated,
+      "group relative p-8 overflow-hidden"
+    )}>
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 dark:from-indigo-500/10 dark:to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-900/30 mb-4">
-              <span className="text-xs font-bold text-indigo-700 dark:text-indigo-300 uppercase tracking-wider">
-                ⭐ Level {level}
-              </span>
+            <div className={cn(badgePrimary, "mb-4")}>
+              ⭐ Level {level}
             </div>
             <p className="text-4xl font-black text-slate-900 dark:text-white">
               Level {level}
@@ -53,7 +56,7 @@ export function XPBar({ currentXP, level }: XPBarProps) {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 pt-2">
+          <div className={cn("flex items-center justify-between text-xs pt-2", textMuted)}>
             <span className="font-medium">
               {xpInCurrentLevel.toLocaleString()} / {xpNeededForNext.toLocaleString()} XP
             </span>

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { FormInput, FormSelect, FormError } from "@/components/forms";
 import { GCSE_SUBJECTS, YEAR_GROUPS, GRADE_OPTIONS } from "@/constants";
 import { replaceUnderscores } from "@/lib/utils";
+import { cn, animateFadeIn, animateSlideUp, gradientPrimary } from "@/styles";
 
 interface OnboardingFormData {
   displayName: string;
@@ -102,7 +103,7 @@ export default function OnboardingPage() {
 
       <div className="relative mx-auto max-w-2xl space-y-8">
         {/* Header */}
-        <div className="text-center space-y-4 mb-12">
+        <div className={cn("text-center space-y-4 mb-12", animateFadeIn)}>
           <div className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30">
             <span className="text-sm font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
               Welcome to GCSC Student Hub ✨
@@ -178,7 +179,7 @@ export default function OnboardingPage() {
 
           {/* Step 4: Target Grades */}
           {formData.selectedSubjects.length > 0 && (
-            <div className="space-y-4 rounded-xl border border-indigo-500/20 bg-indigo-500/5 p-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+            <div className={cn("space-y-4 rounded-xl border border-indigo-500/20 bg-indigo-500/5 p-6", animateSlideUp)}>
               <label className="block text-sm font-semibold text-white">
                 What are your target grades?
               </label>

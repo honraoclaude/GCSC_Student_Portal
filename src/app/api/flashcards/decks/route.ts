@@ -1,4 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
+import { getUserWithProfile, getUserFlashcardDecks } from "@/lib/db";
+import { prisma } from "@/lib/db/prisma";
 
 export async function GET() {
   try {
@@ -10,22 +12,7 @@ export async function GET() {
       });
     }
 
-    const { prisma } = await import("@/lib/db/prisma");
-
-    const user = await prisma.user.findUnique({
-      where: { clerkId: userId },
-      include: {
-        studentProfile: {
-          include: {
-            flashcardDecks: {
-              include: {
-                cards: true,
-              },
-            },
-          },
-        },
-      },
-    });
+    const user = await getUserWithProfile(userId);
 
     if (!user?.studentProfile) {
       return new Response(JSON.stringify({ error: "Student profile not found" }), {
@@ -34,15 +21,17 @@ export async function GET() {
       });
     }
 
-    const decks = user.studentProfile.flashcardDecks.map((deck) => ({
+    const decks = await getUserFlashcardDecks(user.studentProfile.id);
+
+    const formattedDecks = decks.map((deck) => ({
       id: deck.id,
       title: deck.title,
       subject: deck.subject,
-      cardCount: deck.cards.length,
+      cardCount: deck._count?.cards || 0,
       createdAt: deck.createdAt,
     }));
 
-    return new Response(JSON.stringify({ decks }), {
+    return new Response(JSON.stringify({ decks: formattedDecks }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
@@ -78,12 +67,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { prisma } = await import("@/lib/db/prisma");
-
-    const user = await prisma.user.findUnique({
-      where: { clerkId: userId },
-      include: { studentProfile: true },
-    });
+    const user = await getUserWithProfile(userId);
 
     if (!user?.studentProfile) {
       return new Response(JSON.stringify({ error: "Student profile not found" }), {

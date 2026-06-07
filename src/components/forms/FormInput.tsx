@@ -1,4 +1,5 @@
 import React from "react";
+import { inputBase, inputError, formLabel, formErrorMessage, formHelperText, cn } from "@/styles";
 
 interface FormInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -24,7 +25,7 @@ export function FormInput({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-sm font-semibold text-slate-900 dark:text-white mb-2"
+          className={formLabel}
         >
           {label}
           {required && <span className="text-rose-500 ml-1">*</span>}
@@ -33,22 +34,18 @@ export function FormInput({
 
       <input
         id={inputId}
-        className={`w-full rounded-lg border bg-white dark:bg-slate-800 px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 transition-all outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-0 dark:focus:ring-indigo-400 ${
-          error
-            ? "border-rose-500 dark:border-rose-500/50"
-            : "border-slate-300 dark:border-slate-600 focus:border-indigo-500 dark:focus:border-indigo-500"
-        } ${className}`}
+        className={cn(error ? inputError : inputBase, className)}
         {...props}
       />
 
       {error && (
-        <p className="mt-2 text-sm font-medium text-rose-600 dark:text-rose-400">
+        <p className={formErrorMessage}>
           {error}
         </p>
       )}
 
       {helperText && !error && (
-        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+        <p className={formHelperText}>
           {helperText}
         </p>
       )}

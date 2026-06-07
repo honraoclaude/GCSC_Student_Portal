@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { cardElevated, textMuted, cn } from "@/styles";
 
 interface SubjectCardProps {
   subject: string;
@@ -26,7 +27,10 @@ export function SubjectCard({ subject, targetGrade, currentGrade }: SubjectCardP
 
   return (
     <Link href={`/agents/tutor/${subject.toLowerCase()}`}>
-      <div className="group relative rounded-2xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-6 shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer overflow-hidden">
+      <div className={cn(
+        cardElevated,
+        "group relative p-6 cursor-pointer overflow-hidden"
+      )}>
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 dark:from-blue-500/10 dark:to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <div className="relative z-10">
@@ -47,7 +51,7 @@ export function SubjectCard({ subject, targetGrade, currentGrade }: SubjectCardP
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3 flex-1">
                 <div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-1">
+                  <p className={cn("text-xs font-medium mb-1", textMuted)}>
                     Current
                   </p>
                   <p className="text-lg font-bold text-slate-900 dark:text-white">
@@ -56,7 +60,7 @@ export function SubjectCard({ subject, targetGrade, currentGrade }: SubjectCardP
                 </div>
                 <div className="h-8 w-px bg-slate-200 dark:bg-slate-700" />
                 <div>
-                  <p className="text-xs text-slate-600 dark:text-slate-400 font-medium mb-1">
+                  <p className={cn("text-xs font-medium mb-1", textMuted)}>
                     Target
                   </p>
                   <p className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400 bg-clip-text text-transparent">

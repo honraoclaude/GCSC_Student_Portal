@@ -1,50 +1,42 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { SectionCard } from "@/components/layout/SectionCard";
+import { buttonPrimary, cn } from "@/styles";
 
 export default function LearningHubPage() {
   return (
-    <div className="space-y-16">
-      {/* Header */}
-      <div className="space-y-4">
-        <div className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30">
-          <span className="text-sm font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-            Your Learning Journey ✨
-          </span>
-        </div>
-        <h1 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white">
-          Learning Hub
-        </h1>
-        <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl">
-          Master GCSE subjects with AI tutoring, spaced repetition flashcards, and personalized learning paths
-        </p>
+    <PageLayout
+      title="Learning Hub"
+      description="Master GCSE subjects with AI tutoring, spaced repetition flashcards, and personalized learning paths"
+    >
+      {/* Hero Badge */}
+      <div className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30 mb-4">
+        <span className="text-sm font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+          Your Learning Journey ✨
+        </span>
       </div>
 
       {/* Feature Cards */}
       <div className="grid gap-8 md:grid-cols-2">
         {/* Flashcards - Active */}
         <Link href="/learning-hub/flashcards">
-          <div className="group relative rounded-2xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-white/5 dark:from-white/10 dark:via-white/5 dark:to-white/5 backdrop-blur-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden h-full">
+          <SectionCard
+            icon="🎴"
+            title="Flashcards"
+            description="SM-2 spaced repetition algorithm for optimal learning"
+            variant="glass"
+            className="group relative p-8 cursor-pointer overflow-hidden h-full hover:border-indigo-400/50 transition-all"
+          >
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-blue-500/10 dark:from-indigo-500/20 dark:to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-300" />
-
-            <div className="relative z-10 space-y-4">
-              <div className="text-6xl group-hover:scale-110 transition-transform duration-300">
-                🎴
-              </div>
-              <div>
-                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
-                  Flashcards
-                </h2>
-                <p className="text-slate-600 dark:text-slate-300">
-                  SM-2 spaced repetition algorithm for optimal learning
-                </p>
-              </div>
+            <div className="relative z-10">
               <div className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold group-hover:gap-3 transition-all">
                 <span>Start studying</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </div>
-          </div>
+          </SectionCard>
         </Link>
 
         {/* Notes - Coming Soon */}
@@ -68,22 +60,19 @@ export default function LearningHubPage() {
       </div>
 
       {/* Features Section */}
-      <div className="space-y-6">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
-          Why use the Learning Hub?
-        </h2>
+      <SectionCard
+        title="Why use the Learning Hub?"
+        variant="glass"
+      >
         <div className="grid gap-6 md:grid-cols-3">
           {[
             { icon: "📊", title: "SM-2 Algorithm", desc: "Scientifically-proven spaced repetition scheduling" },
             { icon: "⚡", title: "Smart Scheduling", desc: "Difficult cards appear more often for better retention" },
             { icon: "📈", title: "Progress Tracking", desc: "See your learning progress and earn XP rewards" },
           ].map((feature, i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-6 hover:border-white/20 dark:hover:border-white/20 transition-all hover:shadow-lg"
-            >
-              <p className="text-4xl mb-3">{feature.icon}</p>
-              <h3 className="font-semibold text-slate-900 dark:text-white mb-2">
+            <div key={i} className="space-y-3">
+              <p className="text-4xl">{feature.icon}</p>
+              <h3 className="font-semibold text-slate-900 dark:text-white">
                 {feature.title}
               </h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -92,7 +81,7 @@ export default function LearningHubPage() {
             </div>
           ))}
         </div>
-      </div>
+      </SectionCard>
 
       {/* CTA Section */}
       <div className="relative rounded-2xl border border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/40 dark:to-purple-950/40 backdrop-blur p-12 text-center overflow-hidden">
@@ -107,12 +96,12 @@ export default function LearningHubPage() {
             Create your first flashcard deck and join thousands of students using spaced repetition to master their subjects
           </p>
           <Link href="/learning-hub/flashcards/new">
-            <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all">
+            <Button className={cn(buttonPrimary, "px-8 py-3")}>
               Create Your First Deck
             </Button>
           </Link>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

@@ -1,3 +1,5 @@
+import { cn } from "@/styles";
+
 interface AchievementBadgeProps {
   emoji: string;
   name: string;
@@ -33,17 +35,28 @@ export function AchievementBadge({
 }: AchievementBadgeProps) {
   return (
     <div
-      className={`relative rounded-xl p-6 text-center transition-all ${
+      className={cn(
+        "relative rounded-xl p-6 text-center transition-all",
         unlocked
-          ? `bg-gradient-to-br ${rarityColors[rarity]} border-2 ${rarityBorders[rarity]} shadow-lg hover:shadow-xl hover:scale-105`
+          ? cn(
+              `bg-gradient-to-br ${rarityColors[rarity]}`,
+              `border-2 ${rarityBorders[rarity]}`,
+              "shadow-lg hover:shadow-xl hover:scale-105"
+            )
           : "bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 border-2 border-slate-400 dark:border-slate-600 opacity-50"
-      }`}
+      )}
     >
       <div className="text-5xl mb-3">{emoji}</div>
-      <h3 className={`font-bold text-lg ${unlocked ? "text-white" : "text-slate-600 dark:text-slate-400"}`}>
+      <h3 className={cn(
+        "font-bold text-lg",
+        unlocked ? "text-white" : "text-slate-600 dark:text-slate-400"
+      )}>
         {name}
       </h3>
-      <p className={`text-sm mt-1 ${unlocked ? "text-white/90" : "text-slate-600 dark:text-slate-500"}`}>
+      <p className={cn(
+        "text-sm mt-1",
+        unlocked ? "text-white/90" : "text-slate-600 dark:text-slate-500"
+      )}>
         {description}
       </p>
       {unlocked && (

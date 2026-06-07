@@ -1,3 +1,5 @@
+import { cn } from "@/styles";
+
 interface LoadingSpinnerProps {
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -14,7 +16,7 @@ export function LoadingSpinner({
   className = "",
 }: LoadingSpinnerProps) {
   return (
-    <div className={`inline-block ${sizeMap[size]} ${className}`}>
+    <div className={cn("inline-block", sizeMap[size], className)}>
       <svg
         className="h-full w-full animate-spin text-indigo-600 dark:text-indigo-400"
         xmlns="http://www.w3.org/2000/svg"

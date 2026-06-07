@@ -1,6 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/db/prisma";
+import { getUserWithProfile, getStudentEnrolledSubjects } from "@/lib/db";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { SectionCard } from "@/components/layout/SectionCard";
 import { StreakCard } from "@/components/dashboard/StreakCard";
 import { XPBar } from "@/components/dashboard/XPBar";
 import { SubjectCard } from "@/components/dashboard/SubjectCard";
@@ -12,55 +14,40 @@ export default async function DashboardPage() {
     redirect("/sign-in");
   }
 
-  const user = await prisma.user.findUnique({
-    where: { clerkId: userId },
-    include: {
-      studentProfile: {
-        include: {
-          subjectEnrollments: true,
-        },
-      },
-    },
-  });
+  const user = await getUserWithProfile(userId);
 
   if (!user?.studentProfile) {
     redirect("/onboarding");
   }
 
   const profile = user.studentProfile;
-  const subjects = profile.subjectEnrollments || [];
+  const subjects = await getStudentEnrolledSubjects(profile.id);
 
   return (
-    <div className="space-y-12">
-      {/* Header Section */}
-      <div className="space-y-2">
-        <h1 className="text-5xl font-black text-slate-900 dark:text-white">
-          Welcome back, {profile.displayName.split(" ")[0]}! 👋
-        </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400 font-medium">
-          Your personal academic command center
-        </p>
-      </div>
-
-      {/* Stats Section */}
-      <div className="space-y-4">
-        <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
-          📊 Your Progress
-        </h2>
+    <PageLayout
+      title={`Welcome back, ${profile.displayName.split(" ")[0]}! 👋`}
+      description="Your personal academic command center"
+    >
+      {/* Progress Stats */}
+      <SectionCard
+        title="📊 Your Progress"
+        variant="glass"
+      >
         <div className="grid gap-6 lg:grid-cols-2">
-          <StreakCard currentStreak={profile.currentStreak} longestStreak={profile.longestStreak} />
+          <StreakCard
+            currentStreak={profile.currentStreak}
+            longestStreak={profile.longestStreak}
+          />
           <XPBar currentXP={profile.totalXP} level={profile.level} />
         </div>
-      </div>
+      </SectionCard>
 
       {/* Subjects Section */}
       {subjects.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
-              📚 {subjects.length} Enrolled Subject{subjects.length !== 1 ? "s" : ""}
-            </h2>
-          </div>
+        <SectionCard
+          title={`📚 ${subjects.length} Enrolled Subject${subjects.length !== 1 ? "s" : ""}`}
+          variant="glass"
+        >
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {subjects.map((enrollment) => (
               <SubjectCard
@@ -70,7 +57,7 @@ export default async function DashboardPage() {
               />
             ))}
           </div>
-        </div>
+        </SectionCard>
       )}
 
       {/* CTA Section */}
@@ -87,6 +74,6 @@ export default async function DashboardPage() {
           </p>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

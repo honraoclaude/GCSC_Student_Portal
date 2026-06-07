@@ -1,7 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/db/prisma";
+import { getUserWithProfile, getUserAchievements } from "@/lib/db";
 import { ACHIEVEMENTS } from "@/lib/gamification/achievements";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { SectionCard } from "@/components/layout/SectionCard";
 import { AchievementBadge } from "@/components/gamification/AchievementBadge";
 import { StatCard } from "@/components/cards";
 
@@ -12,23 +14,14 @@ export default async function AchievementsPage() {
     redirect("/sign-in");
   }
 
-  const user = await prisma.user.findUnique({
-    where: { clerkId: userId },
-    include: {
-      studentProfile: true,
-      achievements: {
-        include: {
-          achievement: true,
-        },
-      },
-    },
-  });
+  const user = await getUserWithProfile(userId);
 
   if (!user?.studentProfile) {
     redirect("/onboarding");
   }
 
-  const unlockedSlugs = user.achievements.map((a) => a.achievement.slug);
+  const userAchievements = await getUserAchievements(userId);
+  const unlockedSlugs = userAchievements.map((a) => a.achievement.slug);
   const allAchievements = Object.values(ACHIEVEMENTS);
   const unlockedAchievements = allAchievements.filter((a) =>
     unlockedSlugs.includes(a.slug)
@@ -43,17 +36,10 @@ export default async function AchievementsPage() {
   );
 
   return (
-    <div className="space-y-12">
-      {/* Header */}
-      <div className="space-y-4">
-        <h1 className="text-5xl font-bold text-slate-900 dark:text-white">
-          🏆 Achievements
-        </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400">
-          Unlock badges and celebrate your learning milestones
-        </p>
-      </div>
-
+    <PageLayout
+      title="🏆 Achievements"
+      description="Unlock badges and celebrate your learning milestones"
+    >
       {/* Stats */}
       <div className="grid gap-6 md:grid-cols-3">
         <StatCard
@@ -78,10 +64,11 @@ export default async function AchievementsPage() {
 
       {/* Unlocked Achievements */}
       {unlockedAchievements.length > 0 && (
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-            ✨ Unlocked Badges
-          </h2>
+        <SectionCard
+          title="✨ Unlocked Badges"
+          description={`You've unlocked ${unlockedAchievements.length} badges! Keep it up!`}
+          variant="glass"
+        >
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {unlockedAchievements.map((achievement) => (
               <AchievementBadge
@@ -91,18 +78,16 @@ export default async function AchievementsPage() {
               />
             ))}
           </div>
-        </div>
+        </SectionCard>
       )}
 
       {/* Locked Achievements */}
       {lockedAchievements.length > 0 && (
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-            🔒 Locked Achievements
-          </h2>
-          <p className="text-slate-600 dark:text-slate-400">
-            Keep studying to unlock these badges!
-          </p>
+        <SectionCard
+          title="🔒 Locked Achievements"
+          description="Keep studying to unlock these badges!"
+          variant="glass"
+        >
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {lockedAchievements.map((achievement) => (
               <AchievementBadge
@@ -112,8 +97,8 @@ export default async function AchievementsPage() {
               />
             ))}
           </div>
-        </div>
+        </SectionCard>
       )}
-    </div>
+    </PageLayout>
   );
 }

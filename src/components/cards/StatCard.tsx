@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "./Card";
+import { textMuted, textSubtle, cn } from "@/styles";
 
 interface StatCardProps {
   icon?: string;
@@ -19,17 +20,17 @@ export function StatCard({
   className = "",
 }: StatCardProps) {
   return (
-    <Card variant="default" className={`p-6 ${className}`}>
+    <Card variant="default" className={cn("p-6", className)}>
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">
+          <p className={cn("text-sm font-medium mb-2", textMuted)}>
             {label}
           </p>
           <p className={`text-3xl md:text-4xl font-bold bg-gradient-to-r ${colorClass} bg-clip-text text-transparent`}>
             {value}
           </p>
           {description && (
-            <p className="mt-3 text-xs text-slate-500 dark:text-slate-500">
+            <p className={cn("mt-3 text-xs", textSubtle)}>
               {description}
             </p>
           )}

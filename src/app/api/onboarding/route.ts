@@ -1,3 +1,6 @@
+import { getUserWithProfile } from "@/lib/db";
+import { prisma } from "@/lib/db/prisma";
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -9,12 +12,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const { prisma } = await import("@/lib/db/prisma");
-
-    const user = await prisma.user.findUnique({
-      where: { clerkId: body.userId },
-      include: { studentProfile: true },
-    });
+    const user = await getUserWithProfile(body.userId);
 
     if (!user?.studentProfile) {
       return new Response(JSON.stringify({ error: "Student profile not found" }), {

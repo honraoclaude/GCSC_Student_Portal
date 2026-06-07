@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { buttonPrimary, buttonSecondary, heroSection } from "@/styles";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -9,7 +10,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-slate-950 px-4">
+    <div className={heroSection}>
       <div className="space-y-8 text-center">
         <div className="space-y-3">
           <h1 className="text-5xl font-bold text-white sm:text-6xl">
@@ -28,13 +29,13 @@ export default async function Home() {
         <div className="flex flex-col gap-4 sm:flex-row justify-center">
           <a
             href="/sign-up"
-            className="inline-flex h-12 items-center justify-center rounded-lg bg-blue-600 px-8 font-semibold text-white hover:bg-blue-700 transition-colors"
+            className={`${buttonPrimary} h-12 px-8`}
           >
             Get Started
           </a>
           <a
             href="/sign-in"
-            className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-600 px-8 font-semibold text-slate-200 hover:bg-slate-800 transition-colors"
+            className={`${buttonSecondary} h-12 px-8`}
           >
             Sign In
           </a>
