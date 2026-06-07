@@ -76,6 +76,7 @@ export default function OnboardingPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          userId, // Send the current user's ID from Clerk
           displayName,
           yearGroup,
           subjects: selectedSubjects.map((subject) => ({
