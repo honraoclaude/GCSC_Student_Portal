@@ -55,20 +55,20 @@ export default function CreateDeckPage() {
     <div className="max-w-2xl space-y-8">
       {/* Header */}
       <div>
-        <Link href="/learning-hub/flashcards" className="text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 mb-4 inline-block">
+        <Link href="/learning-hub/flashcards" className="text-sm font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 mb-4 inline-flex items-center gap-1 transition-colors">
           ← Back to Decks
         </Link>
-        <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
+        <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
           Create New Deck
         </h1>
         <p className="mt-2 text-slate-600 dark:text-slate-400">
-          Start building your flashcard deck
+          Start your spaced repetition learning journey
         </p>
       </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-8 space-y-6">
+        <div className="rounded-2xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/10 to-white/5 dark:from-white/10 dark:to-white/5 backdrop-blur-xl p-8 space-y-6 shadow-xl">
           {/* Title */}
           <div>
             <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
