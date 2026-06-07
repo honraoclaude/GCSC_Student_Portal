@@ -1,6 +1,4 @@
 export async function POST(req: Request) {
-  const encoder = new TextEncoder();
-
   try {
     const { agentType, subject, message } = await req.json();
 
@@ -29,37 +27,43 @@ export async function POST(req: Request) {
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
-    // Create async generator for streaming
-    const stream = async function* () {
-      try {
-        const response = await client.messages.create({
-          model: "claude-3-5-sonnet-20241022",
-          max_tokens: 1024,
-          system: systemPrompt,
-          messages: [
-            {
-              role: "user",
-              content: message,
-            },
-          ],
-          stream: true,
-        });
+    const encoder = new TextEncoder();
 
-        for await (const event of response) {
-          if (event.type === "content_block_delta" && event.delta?.type === "text_delta") {
-            yield `data: ${JSON.stringify({ text: event.delta.text })}\n\n`;
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          const response = await client.messages.create({
+            model: "claude-3-5-sonnet-20241022",
+            max_tokens: 1024,
+            system: systemPrompt,
+            messages: [
+              {
+                role: "user",
+                content: message,
+              },
+            ],
+            stream: true,
+          });
+
+          for await (const event of response as any) {
+            if (event.type === "content_block_delta" && event.delta?.type === "text_delta") {
+              const chunk = `data: ${JSON.stringify({ text: event.delta.text })}\n\n`;
+              controller.enqueue(encoder.encode(chunk));
+            }
           }
+
+          controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+          controller.close();
+        } catch (error) {
+          console.error("Anthropic stream error:", error);
+          const errorChunk = `data: ${JSON.stringify({ error: String(error) })}\n\n`;
+          controller.enqueue(encoder.encode(errorChunk));
+          controller.close();
         }
-        yield "data: [DONE]\n\n";
-      } catch (error) {
-        console.error("Anthropic error:", error);
-        yield `data: ${JSON.stringify({ error: String(error) })}\n\n`;
-      }
-    };
+      },
+    });
 
-    const responseStream = ReadableStream.from(stream());
-
-    return new Response(responseStream, {
+    return new Response(stream, {
       headers: {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
@@ -68,9 +72,9 @@ export async function POST(req: Request) {
     });
   } catch (error) {
     console.error("Chat error:", error);
-    return new Response(`data: ${JSON.stringify({ error: String(error) })}\n\n`, {
+    return new Response(JSON.stringify({ error: String(error) }), {
       status: 500,
-      headers: { "Content-Type": "text/event-stream" },
+      headers: { "Content-Type": "application/json" },
     });
   }
 }
