@@ -1,0 +1,10 @@
+{
+  "buildCommand": "prisma generate && next build",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1",
+      "methods": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    }
+  ]
+}
