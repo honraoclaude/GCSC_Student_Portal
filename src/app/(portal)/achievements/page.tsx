@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db/prisma";
 import { ACHIEVEMENTS } from "@/lib/gamification/achievements";
 import { AchievementBadge } from "@/components/gamification/AchievementBadge";
+import { StatCard } from "@/components/cards";
 
 export default async function AchievementsPage() {
   const { userId } = await auth();
@@ -14,9 +15,10 @@ export default async function AchievementsPage() {
   const user = await prisma.user.findUnique({
     where: { clerkId: userId },
     include: {
-      studentProfile: {
+      studentProfile: true,
+      achievements: {
         include: {
-          achievements: true,
+          achievement: true,
         },
       },
     },
@@ -26,7 +28,7 @@ export default async function AchievementsPage() {
     redirect("/onboarding");
   }
 
-  const unlockedSlugs = user.studentProfile.achievements.map((a) => a.achievementSlug);
+  const unlockedSlugs = user.achievements.map((a) => a.achievement.slug);
   const allAchievements = Object.values(ACHIEVEMENTS);
   const unlockedAchievements = allAchievements.filter((a) =>
     unlockedSlugs.includes(a.slug)
@@ -54,43 +56,24 @@ export default async function AchievementsPage() {
 
       {/* Stats */}
       <div className="grid gap-6 md:grid-cols-3">
-        {[
-          {
-            label: "Unlocked",
-            value: unlockedAchievements.length,
-            icon: "🎯",
-            color: "from-indigo-500 to-blue-500",
-          },
-          {
-            label: "Total Achievements",
-            value: allAchievements.length,
-            icon: "🏅",
-            color: "from-amber-500 to-orange-500",
-          },
-          {
-            label: "XP Earned",
-            value: totalXpFromAchievements,
-            icon: "⭐",
-            color: "from-purple-500 to-pink-500",
-          },
-        ].map((stat, i) => (
-          <div
-            key={i}
-            className="rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-6"
-          >
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                  {stat.label}
-                </p>
-                <p className={`mt-2 text-4xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
-                  {stat.value}
-                </p>
-              </div>
-              <span className="text-3xl">{stat.icon}</span>
-            </div>
-          </div>
-        ))}
+        <StatCard
+          label="Unlocked"
+          value={unlockedAchievements.length}
+          icon="🎯"
+          colorClass="from-indigo-500 to-blue-500"
+        />
+        <StatCard
+          label="Total Achievements"
+          value={allAchievements.length}
+          icon="🏅"
+          colorClass="from-amber-500 to-orange-500"
+        />
+        <StatCard
+          label="XP Earned"
+          value={totalXpFromAchievements}
+          icon="⭐"
+          colorClass="from-purple-500 to-pink-500"
+        />
       </div>
 
       {/* Unlocked Achievements */}

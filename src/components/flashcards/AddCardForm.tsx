@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { FormTextarea, FormInput } from "@/components/forms";
 
 interface AddCardFormProps {
   deckId: string;
@@ -42,52 +43,38 @@ export function AddCardForm({ deckId }: AddCardFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-          Question / Front
-        </label>
-        <textarea
-          required
-          value={formData.front}
-          onChange={(e) =>
-            setFormData({ ...formData, front: e.target.value })
-          }
-          placeholder="What is photosynthesis?"
-          rows={3}
-          className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-      </div>
+      <FormTextarea
+        label="Question / Front"
+        required
+        value={formData.front}
+        onChange={(e) =>
+          setFormData({ ...formData, front: e.target.value })
+        }
+        placeholder="What is photosynthesis?"
+        rows={3}
+      />
 
-      <div>
-        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-          Answer / Back
-        </label>
-        <textarea
-          required
-          value={formData.back}
-          onChange={(e) =>
-            setFormData({ ...formData, back: e.target.value })
-          }
-          placeholder="The process by which plants convert sunlight into chemical energy..."
-          rows={3}
-          className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-      </div>
+      <FormTextarea
+        label="Answer / Back"
+        required
+        value={formData.back}
+        onChange={(e) =>
+          setFormData({ ...formData, back: e.target.value })
+        }
+        placeholder="The process by which plants convert sunlight into chemical energy..."
+        rows={3}
+      />
 
-      <div>
-        <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-2">
-          Hint (optional)
-        </label>
-        <input
-          type="text"
-          value={formData.hint}
-          onChange={(e) =>
-            setFormData({ ...formData, hint: e.target.value })
-          }
-          placeholder="Think about energy from the sun..."
-          className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-3 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-      </div>
+      <FormInput
+        label="Hint"
+        type="text"
+        value={formData.hint}
+        onChange={(e) =>
+          setFormData({ ...formData, hint: e.target.value })
+        }
+        placeholder="Think about energy from the sun..."
+        helperText="Optional: A hint to help you remember this card"
+      />
 
       <Button
         type="submit"

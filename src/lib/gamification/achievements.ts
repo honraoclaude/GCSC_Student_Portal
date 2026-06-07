@@ -87,8 +87,12 @@ export async function checkAndAwardAchievements(
     include: {
       studentProfile: {
         include: {
-          achievements: true,
           flashcardDecks: true,
+        },
+      },
+      achievements: {
+        include: {
+          achievement: true,
         },
       },
     },
@@ -97,8 +101,8 @@ export async function checkAndAwardAchievements(
   if (!user?.studentProfile) return [];
 
   const newAchievements: Achievement[] = [];
-  const existingAchievementSlugs = user.studentProfile.achievements.map(
-    (a) => a.achievementSlug
+  const existingAchievementSlugs = user.achievements.map(
+    (a) => a.achievement.slug
   );
 
   // Check each achievement condition
@@ -132,10 +136,25 @@ export async function checkAndAwardAchievements(
     if (!existingAchievementSlugs.includes(key) && check()) {
       const achievement = ACHIEVEMENTS[key];
       if (achievement) {
+        // Find or create the achievement in DB
+        const dbAchievement = await prisma.achievement.upsert({
+          where: { slug: key },
+          update: {},
+          create: {
+            slug: key,
+            name: achievement.name,
+            description: achievement.description,
+            iconUrl: achievement.emoji,
+            xpReward: achievement.xpReward,
+            category: achievement.rarity,
+            triggerCondition: {},
+          },
+        });
+
         await prisma.userAchievement.create({
           data: {
-            studentProfileId: user.studentProfile.id,
-            achievementSlug: key,
+            userId: user.id,
+            achievementId: dbAchievement.id,
           },
         });
         newAchievements.push(achievement);
@@ -153,9 +172,10 @@ export async function getUserAchievements(userId: string) {
   const user = await prisma.user.findUnique({
     where: { clerkId: userId },
     include: {
-      studentProfile: {
+      studentProfile: true,
+      achievements: {
         include: {
-          achievements: true,
+          achievement: true,
         },
       },
     },
@@ -163,7 +183,7 @@ export async function getUserAchievements(userId: string) {
 
   if (!user?.studentProfile) return [];
 
-  return user.studentProfile.achievements
-    .map((ua) => ACHIEVEMENTS[ua.achievementSlug])
+  return user.achievements
+    .map((ua) => ACHIEVEMENTS[ua.achievement.slug])
     .filter(Boolean);
 }

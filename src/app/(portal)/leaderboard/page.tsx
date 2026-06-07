@@ -26,9 +26,6 @@ export default async function LeaderboardPage() {
   const topStudents = await prisma.studentProfile.findMany({
     include: {
       user: true,
-      _count: {
-        select: { xpEvents: true },
-      },
     },
     orderBy: {
       totalXP: "desc",
@@ -37,7 +34,7 @@ export default async function LeaderboardPage() {
   });
 
   const userRank = topStudents.findIndex(
-    (s) => s.id === user.studentProfile.id
+    (s) => s.id === user.studentProfile!.id
   ) + 1;
 
   return (
@@ -101,7 +98,7 @@ export default async function LeaderboardPage() {
                   <tr
                     key={student.id}
                     className={`hover:bg-white/5 dark:hover:bg-white/5 transition-colors ${
-                      student.id === user.studentProfile.id
+                      student.id === user.studentProfile!.id
                         ? "bg-indigo-50/20 dark:bg-indigo-950/20"
                         : ""
                     }`}

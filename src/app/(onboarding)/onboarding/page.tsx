@@ -4,34 +4,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-
-const GCSE_SUBJECTS = [
-  "MATHS",
-  "ENGLISH_LANGUAGE",
-  "ENGLISH_LITERATURE",
-  "PHYSICS",
-  "CHEMISTRY",
-  "BIOLOGY",
-  "COMPUTER_SCIENCE",
-  "ECONOMICS",
-  "BUSINESS",
-  "GEOGRAPHY",
-  "HISTORY",
-];
-
-const YEAR_GROUPS = ["YEAR_9", "YEAR_10", "YEAR_11"];
-
-const GRADE_TARGETS = [
-  "GRADE_1",
-  "GRADE_2",
-  "GRADE_3",
-  "GRADE_4",
-  "GRADE_5",
-  "GRADE_6",
-  "GRADE_7",
-  "GRADE_8",
-  "GRADE_9",
-];
+import { FormInput, FormSelect, FormError } from "@/components/forms";
+import { GCSE_SUBJECTS, YEAR_GROUPS, GRADE_OPTIONS } from "@/constants";
 
 export default function OnboardingPage() {
   const { userId } = useAuth();
@@ -125,43 +99,31 @@ export default function OnboardingPage() {
 
         {/* Form Card (Glassmorphism) */}
         <form onSubmit={handleSubmit} className="space-y-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-12 shadow-2xl">
-          {error && (
-            <div className="rounded-xl bg-rose-500/10 border border-rose-500/30 p-4 text-rose-300 text-sm font-medium animate-pulse">
-              ⚠️ {error}
-            </div>
-          )}
+          <FormError error={error} className="bg-rose-500/10 border-rose-500/30 animate-pulse" />
 
           {/* Step 1: Name */}
-          <div className="space-y-3">
-            <label className="block text-sm font-semibold text-white">
-              What&apos;s your name?
-            </label>
-            <input
-              type="text"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="e.g., Alex"
-              className="w-full rounded-lg border border-white/10 bg-white/5 backdrop-blur px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-            />
-          </div>
+          <FormInput
+            label="What's your name?"
+            type="text"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            placeholder="e.g., Alex"
+            className="dark:bg-white/5 dark:border-white/10 dark:text-white dark:placeholder-slate-400"
+            required
+          />
 
           {/* Step 2: Year Group */}
-          <div className="space-y-3">
-            <label className="block text-sm font-semibold text-white">
-              Which year group are you in?
-            </label>
-            <select
-              value={yearGroup}
-              onChange={(e) => setYearGroup(e.target.value)}
-              className="w-full rounded-lg border border-white/10 bg-white/5 backdrop-blur px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-            >
-              {YEAR_GROUPS.map((year) => (
-                <option key={year} value={year} className="bg-slate-900">
-                  {year.replace("_", " ")}
-                </option>
-              ))}
-            </select>
-          </div>
+          <FormSelect
+            label="Which year group are you in?"
+            value={yearGroup}
+            onChange={(e) => setYearGroup(e.target.value)}
+            options={YEAR_GROUPS.map((year) => ({
+              value: year,
+              label: year.replace(/_/g, " "),
+            }))}
+            className="dark:bg-white/5 dark:border-white/10 dark:text-white"
+            required
+          />
 
           {/* Step 3: Subjects */}
           <div className="space-y-4">
@@ -197,29 +159,24 @@ export default function OnboardingPage() {
               <label className="block text-sm font-semibold text-white">
                 What are your target grades?
               </label>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {selectedSubjects.map((subject) => (
-                  <div key={subject} className="flex items-center justify-between">
-                    <label className="text-sm text-slate-300">
-                      {subject.replace(/_/g, " ")}
-                    </label>
-                    <select
-                      value={gradeTargets[subject] || "GRADE_7"}
-                      onChange={(e) =>
-                        setGradeTargets({
-                          ...gradeTargets,
-                          [subject]: e.target.value,
-                        })
-                      }
-                      className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-                    >
-                      {GRADE_TARGETS.map((grade) => (
-                        <option key={grade} value={grade} className="bg-slate-900">
-                          Grade {grade.replace("GRADE_", "")}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                  <FormSelect
+                    key={subject}
+                    label={subject.replace(/_/g, " ")}
+                    value={gradeTargets[subject] || "GRADE_7"}
+                    onChange={(e) =>
+                      setGradeTargets({
+                        ...gradeTargets,
+                        [subject]: e.target.value,
+                      })
+                    }
+                    options={GRADE_OPTIONS.map((grade) => ({
+                      value: grade,
+                      label: `Grade ${grade.replace("GRADE_", "")}`,
+                    }))}
+                    className="dark:bg-white/5 dark:border-white/10 dark:text-white"
+                  />
                 ))}
               </div>
             </div>
