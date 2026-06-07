@@ -50,8 +50,8 @@ export async function POST(req: Request) {
         prisma.subjectEnrollment.create({
           data: {
             studentProfileId: profileId,
-            subject: subject.subject,
-            targetGrade: subject.targetGrade,
+            subject: subject.subject as any,
+            targetGrade: subject.targetGrade as any,
           },
         })
       )
