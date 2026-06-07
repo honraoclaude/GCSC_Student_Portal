@@ -29,7 +29,7 @@ export async function GET(
     }
 
     const deck = await prisma.flashcardDeck.findUnique({
-      where: { id: params.deckId },
+      where: { id: deckId },
       include: { cards: true },
     });
 
@@ -46,7 +46,7 @@ export async function GET(
 
     const nextCard = await prisma.flashcard.findFirst({
       where: {
-        deckId: params.deckId,
+        deckId: deckId,
         progress: {
           some: {
             studentProfileId: user.studentProfile.id,

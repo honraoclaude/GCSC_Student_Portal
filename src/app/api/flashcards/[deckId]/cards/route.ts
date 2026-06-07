@@ -31,7 +31,7 @@ export async function POST(
 
     // Verify user owns this deck
     const deck = await prisma.flashcardDeck.findUnique({
-      where: { id: params.deckId },
+      where: { id: deckId },
       include: { studentProfile: true },
     });
 
@@ -56,7 +56,7 @@ export async function POST(
 
     const card = await prisma.flashcard.create({
       data: {
-        deckId: params.deckId,
+        deckId: deckId,
         front,
         back,
         hint: hint || null,
@@ -105,7 +105,7 @@ export async function GET(
     }
 
     const deck = await prisma.flashcardDeck.findUnique({
-      where: { id: params.deckId },
+      where: { id: deckId },
       include: { cards: true },
     });
 
