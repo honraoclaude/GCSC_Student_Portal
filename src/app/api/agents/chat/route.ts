@@ -1,7 +1,3 @@
-import { Anthropic } from "@anthropic-ai/sdk";
-
-const client = new Anthropic();
-
 export async function POST(req: Request) {
   try {
     const { agentType, subject, message } = await req.json();
@@ -26,12 +22,17 @@ export async function POST(req: Request) {
       }
     }
 
+    const { Anthropic } = await import("@anthropic-ai/sdk");
+    const client = new Anthropic({
+      apiKey: process.env.ANTHROPIC_API_KEY,
+    });
+
     // Stream response using SSE format
     const encoder = new TextEncoder();
-    let responseBody = new ReadableStream({
+    const responseBody = new ReadableStream({
       async start(controller) {
         try {
-          const stream = client.messages.stream({
+          const stream = await client.messages.stream({
             model: "claude-3-5-sonnet-20241022",
             max_tokens: 1024,
             system: systemPrompt,
@@ -46,9 +47,10 @@ export async function POST(req: Request) {
           for await (const chunk of stream) {
             if (
               chunk.type === "content_block_delta" &&
-              chunk.delta.type === "text_delta"
+              chunk.delta?.type === "text_delta"
             ) {
-              const data = `data: ${JSON.stringify({ text: chunk.delta.text })}\n\n`;
+              const text = chunk.delta.text || "";
+              const data = `data: ${JSON.stringify({ text })}\n\n`;
               controller.enqueue(encoder.encode(data));
             }
           }
@@ -57,7 +59,9 @@ export async function POST(req: Request) {
           controller.close();
         } catch (error) {
           console.error("Stream error:", error);
-          controller.error(error);
+          const errorData = `data: ${JSON.stringify({ error: String(error) })}\n\n`;
+          controller.enqueue(encoder.encode(errorData));
+          controller.close();
         }
       },
     });
@@ -66,7 +70,7 @@ export async function POST(req: Request) {
       headers: {
         "Content-Type": "text/event-stream",
         "Cache-Control": "no-cache",
-        "Connection": "keep-alive",
+        Connection: "keep-alive",
       },
     });
   } catch (error) {
