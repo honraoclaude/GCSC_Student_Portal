@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs/server";
+import { getAuth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/db/prisma";
 import { z } from "zod";
 
@@ -14,7 +14,7 @@ const OnboardingSchema = z.object({
 });
 
 export async function POST(req: Request) {
-  const { userId } = await auth();
+  const { userId } = await getAuth(req);
 
   if (!userId) {
     return new Response("Unauthorized", { status: 401 });
