@@ -3,109 +3,115 @@ import { Button } from "@/components/ui/button";
 
 export default function LearningHubPage() {
   return (
-    <div className="space-y-12">
+    <div className="space-y-16">
       {/* Header */}
-      <div className="space-y-2">
-        <h1 className="text-5xl font-bold text-slate-900 dark:text-white">
-          📚 Learning Hub
+      <div className="space-y-4">
+        <div className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30">
+          <span className="text-sm font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+            Your Learning Journey ✨
+          </span>
+        </div>
+        <h1 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white">
+          Learning Hub
         </h1>
-        <p className="text-lg text-slate-600 dark:text-slate-400">
-          Everything you need to learn and revise
+        <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl">
+          Master GCSE subjects with AI tutoring, spaced repetition flashcards, and personalized learning paths
         </p>
       </div>
 
-      {/* Cards Grid */}
-      <div className="grid gap-6 md:grid-cols-2">
-        {/* Flashcards */}
+      {/* Feature Cards */}
+      <div className="grid gap-8 md:grid-cols-2">
+        {/* Flashcards - Active */}
         <Link href="/learning-hub/flashcards">
-          <div className="group relative rounded-2xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden h-full">
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-blue-500/5 dark:from-indigo-500/10 dark:to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="group relative rounded-2xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/10 via-white/5 to-white/5 dark:from-white/10 dark:via-white/5 dark:to-white/5 backdrop-blur-xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer overflow-hidden h-full">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-blue-500/10 dark:from-indigo-500/20 dark:to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-300" />
 
-            <div className="relative z-10">
-              <div className="text-5xl mb-4">🎴</div>
-              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-                Flashcards
-              </h2>
-              <p className="text-slate-600 dark:text-slate-400 mb-6">
-                Create decks and learn with spaced repetition (SM-2 algorithm)
-              </p>
-              <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold group-hover:gap-3 transition-all">
+            <div className="relative z-10 space-y-4">
+              <div className="text-6xl group-hover:scale-110 transition-transform duration-300">
+                🎴
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+                  Flashcards
+                </h2>
+                <p className="text-slate-600 dark:text-slate-300">
+                  SM-2 spaced repetition algorithm for optimal learning
+                </p>
+              </div>
+              <div className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold group-hover:gap-3 transition-all">
                 <span>Start studying</span>
-                <span>→</span>
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
               </div>
             </div>
           </div>
         </Link>
 
-        {/* Notes (Coming Soon) */}
-        <div className="relative rounded-2xl border border-slate-300 dark:border-slate-700 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 p-8 shadow-sm opacity-60 cursor-not-allowed">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/20 to-transparent" />
-          <div className="relative z-10">
-            <div className="text-5xl mb-4">📝</div>
-            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-              Notes
-            </h2>
-            <p className="text-slate-600 dark:text-slate-400 mb-6">
-              Create and organize study notes with formatting
-            </p>
-            <div className="inline-block px-3 py-1 rounded-lg bg-slate-300 dark:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300">
+        {/* Notes - Coming Soon */}
+        <div className="relative rounded-2xl border border-slate-400/20 dark:border-slate-400/10 bg-gradient-to-br from-slate-300/10 to-slate-400/10 dark:from-slate-600/10 dark:to-slate-700/10 backdrop-blur p-8 opacity-50 cursor-not-allowed overflow-hidden h-full">
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/5 to-transparent" />
+          <div className="relative z-10 space-y-4">
+            <div className="text-6xl opacity-70">📝</div>
+            <div>
+              <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-300 mb-2">
+                Notes
+              </h2>
+              <p className="text-slate-600 dark:text-slate-400">
+                Rich text notes with formatting and organization
+              </p>
+            </div>
+            <div className="inline-block px-4 py-2 rounded-lg bg-slate-400/30 dark:bg-slate-600/30 text-xs font-bold text-slate-700 dark:text-slate-300">
               Coming Soon
             </div>
           </div>
         </div>
       </div>
 
-      {/* Features */}
-      <div className="space-y-4">
+      {/* Features Section */}
+      <div className="space-y-6">
         <h2 className="text-sm font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">
-          Features
+          Why use the Learning Hub?
         </h2>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4">
-            <p className="text-2xl mb-2">📊</p>
-            <h3 className="font-semibold text-slate-900 dark:text-white mb-1">
-              SM-2 Algorithm
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              Optimal review scheduling based on how well you know each card
-            </p>
-          </div>
-
-          <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4">
-            <p className="text-2xl mb-2">⏰</p>
-            <h3 className="font-semibold text-slate-900 dark:text-white mb-1">
-              Smart Scheduling
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              Cards you struggle with appear more frequently
-            </p>
-          </div>
-
-          <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4">
-            <p className="text-2xl mb-2">📈</p>
-            <h3 className="font-semibold text-slate-900 dark:text-white mb-1">
-              Progress Tracking
-            </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              See your learning progress and earn XP
-            </p>
-          </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          {[
+            { icon: "📊", title: "SM-2 Algorithm", desc: "Scientifically-proven spaced repetition scheduling" },
+            { icon: "⚡", title: "Smart Scheduling", desc: "Difficult cards appear more often for better retention" },
+            { icon: "📈", title: "Progress Tracking", desc: "See your learning progress and earn XP rewards" },
+          ].map((feature, i) => (
+            <div
+              key={i}
+              className="rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-6 hover:border-white/20 dark:hover:border-white/20 transition-all hover:shadow-lg"
+            >
+              <p className="text-4xl mb-3">{feature.icon}</p>
+              <h3 className="font-semibold text-slate-900 dark:text-white mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                {feature.desc}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* CTA */}
-      <div className="rounded-2xl border border-indigo-200 dark:border-indigo-800 bg-gradient-to-br from-indigo-50 to-blue-50 dark:from-indigo-950 dark:to-blue-950 p-8 text-center">
-        <h3 className="text-2xl font-bold text-indigo-900 dark:text-indigo-100 mb-3">
-          Ready to start learning?
-        </h3>
-        <p className="text-indigo-800 dark:text-indigo-200 mb-6">
-          Create your first flashcard deck and start studying with spaced repetition
-        </p>
-        <Link href="/learning-hub/flashcards/new">
-          <Button className="bg-indigo-600 hover:bg-indigo-700 text-white px-8">
-            Create First Deck
-          </Button>
-        </Link>
+      {/* CTA Section */}
+      <div className="relative rounded-2xl border border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/40 dark:to-purple-950/40 backdrop-blur p-12 text-center overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-300 dark:bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20" />
+        </div>
+        <div className="relative z-10 space-y-4">
+          <h3 className="text-3xl md:text-4xl font-bold text-indigo-900 dark:text-indigo-100">
+            Ready to ace your GCSEs?
+          </h3>
+          <p className="text-lg text-indigo-800 dark:text-indigo-200 max-w-2xl mx-auto">
+            Create your first flashcard deck and join thousands of students using spaced repetition to master their subjects
+          </p>
+          <Link href="/learning-hub/flashcards/new">
+            <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold px-8 py-3 rounded-lg shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-0.5 transition-all">
+              Create Your First Deck
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
