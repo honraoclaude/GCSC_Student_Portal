@@ -80,7 +80,7 @@ export async function GET(
           front: cardToReview.front,
           back: cardToReview.back,
           hint: cardToReview.hint,
-          progress: cardToReview.progress[0] || null,
+          progress: "progress" in cardToReview ? (cardToReview.progress as any)[0] || null : null,
         },
       }),
       {
