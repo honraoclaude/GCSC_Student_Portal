@@ -2,8 +2,9 @@ import { auth } from "@clerk/nextjs/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { deckId: string } }
+  { params }: { params: Promise<{ deckId: string }> }
 ) {
+  const { deckId } = await params;
   try {
     const { userId } = await auth();
     if (!userId) {
@@ -77,8 +78,9 @@ export async function POST(
 
 export async function GET(
   req: Request,
-  { params }: { params: { deckId: string } }
+  { params }: { params: Promise<{ deckId: string }> }
 ) {
+  const { deckId } = await params;
   try {
     const { userId } = await auth();
     if (!userId) {
