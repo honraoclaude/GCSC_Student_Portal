@@ -23,8 +23,10 @@ export async function POST(req: Request) {
       });
     }
 
+    const profileId = user.studentProfile!.id;
+
     await prisma.studentProfile.update({
-      where: { id: user.studentProfile.id },
+      where: { id: profileId },
       data: {
         displayName: body.displayName,
         yearGroup: body.yearGroup,
@@ -38,7 +40,7 @@ export async function POST(req: Request) {
         body.subjects.map((subject: any) =>
           prisma.subjectEnrollment.create({
             data: {
-              studentProfileId: user.studentProfile.id,
+              studentProfileId: profileId,
               subject: subject.subject,
               targetGrade: subject.targetGrade,
             },
