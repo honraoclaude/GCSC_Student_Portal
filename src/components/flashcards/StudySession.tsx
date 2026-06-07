@@ -8,7 +8,7 @@ interface Card {
   id: string;
   front: string;
   back: string;
-  hint?: string;
+  hint?: string | null;
 }
 
 interface StudySessionProps {
