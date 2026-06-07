@@ -100,26 +100,40 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-950 px-4 py-12">
-      <div className="mx-auto max-w-2xl space-y-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white">
-            Welcome to GCSC Student Hub
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-900 px-4 py-8 md:py-12">
+      {/* Background gradient orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-0 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10" />
+      </div>
+
+      <div className="relative mx-auto max-w-2xl space-y-8">
+        {/* Header */}
+        <div className="text-center space-y-4 mb-12">
+          <div className="inline-block px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-400/30">
+            <span className="text-sm font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              Welcome to GCSC Student Hub ✨
+            </span>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+            Let&apos;s set up<br />your learning journey
           </h1>
-          <p className="mt-3 text-slate-400">
-            Let&apos;s set up your personalized learning profile
+          <p className="text-lg text-slate-300 max-w-lg mx-auto">
+            Personalized AI tutoring, spaced repetition, and gamification — all in one place
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8 rounded-lg bg-white dark:bg-slate-900 p-8 shadow-lg">
+        {/* Form Card (Glassmorphism) */}
+        <form onSubmit={handleSubmit} className="space-y-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 md:p-12 shadow-2xl">
           {error && (
-            <div className="rounded-lg bg-red-50 dark:bg-red-950 p-4 text-red-900 dark:text-red-200 text-sm">
-              {error}
+            <div className="rounded-xl bg-rose-500/10 border border-rose-500/30 p-4 text-rose-300 text-sm font-medium animate-pulse">
+              ⚠️ {error}
             </div>
           )}
 
-          <div>
-            <label className="block text-sm font-semibold text-slate-900 dark:text-white">
+          {/* Step 1: Name */}
+          <div className="space-y-3">
+            <label className="block text-sm font-semibold text-white">
               What&apos;s your name?
             </label>
             <input
@@ -127,88 +141,110 @@ export default function OnboardingPage() {
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder="e.g., Alex"
-              className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400"
+              className="w-full rounded-lg border border-white/10 bg-white/5 backdrop-blur px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-slate-900 dark:text-white">
-              Year Group
+          {/* Step 2: Year Group */}
+          <div className="space-y-3">
+            <label className="block text-sm font-semibold text-white">
+              Which year group are you in?
             </label>
             <select
               value={yearGroup}
               onChange={(e) => setYearGroup(e.target.value)}
-              className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-slate-900 dark:text-white"
+              className="w-full rounded-lg border border-white/10 bg-white/5 backdrop-blur px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
             >
               {YEAR_GROUPS.map((year) => (
-                <option key={year} value={year}>
+                <option key={year} value={year} className="bg-slate-900">
                   {year.replace("_", " ")}
                 </option>
               ))}
             </select>
           </div>
 
-          <div>
-            <label className="block text-sm font-semibold text-slate-900 dark:text-white mb-4">
-              Select Your GCSE Subjects
-            </label>
+          {/* Step 3: Subjects */}
+          <div className="space-y-4">
+            <div className="space-y-1">
+              <label className="block text-sm font-semibold text-white">
+                Select your GCSE subjects
+              </label>
+              <p className="text-xs text-slate-400">
+                Choose at least one subject to get personalized tutoring
+              </p>
+            </div>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {GCSE_SUBJECTS.map((subject) => (
                 <button
                   key={subject}
                   type="button"
                   onClick={() => toggleSubject(subject)}
-                  className={`rounded-lg border-2 px-4 py-3 text-left font-medium transition-all ${
+                  className={`rounded-lg border-2 px-5 py-3.5 font-medium transition-all duration-200 ${
                     selectedSubjects.includes(subject)
-                      ? "border-blue-600 bg-blue-50 dark:bg-blue-950 text-blue-900 dark:text-blue-200"
-                      : "border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white hover:border-slate-400"
+                      ? "border-indigo-500 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 text-indigo-300 shadow-lg shadow-indigo-500/20 scale-105"
+                      : "border-white/10 bg-white/5 hover:bg-white/10 text-white hover:border-white/20"
                   }`}
                 >
-                  {subject.replace(/_/g, " ")}
+                  {selectedSubjects.includes(subject) ? "✓ " : ""}{subject.replace(/_/g, " ")}
                 </button>
               ))}
             </div>
           </div>
 
+          {/* Step 4: Target Grades */}
           {selectedSubjects.length > 0 && (
-            <div className="space-y-4 rounded-lg bg-slate-50 dark:bg-slate-800 p-4">
-              <label className="block text-sm font-semibold text-slate-900 dark:text-white">
-                Target Grades
+            <div className="space-y-4 rounded-xl border border-indigo-500/20 bg-indigo-500/5 p-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
+              <label className="block text-sm font-semibold text-white">
+                What are your target grades?
               </label>
-              {selectedSubjects.map((subject) => (
-                <div key={subject} className="flex items-center justify-between">
-                  <label className="text-sm text-slate-700 dark:text-slate-300">
-                    {subject.replace(/_/g, " ")}
-                  </label>
-                  <select
-                    value={gradeTargets[subject] || "GRADE_7"}
-                    onChange={(e) =>
-                      setGradeTargets({
-                        ...gradeTargets,
-                        [subject]: e.target.value,
-                      })
-                    }
-                    className="rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-700 px-3 py-1 text-sm text-slate-900 dark:text-white"
-                  >
-                    {GRADE_TARGETS.map((grade) => (
-                      <option key={grade} value={grade}>
-                        {grade.replace("_", "")}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              ))}
+              <div className="space-y-3">
+                {selectedSubjects.map((subject) => (
+                  <div key={subject} className="flex items-center justify-between">
+                    <label className="text-sm text-slate-300">
+                      {subject.replace(/_/g, " ")}
+                    </label>
+                    <select
+                      value={gradeTargets[subject] || "GRADE_7"}
+                      onChange={(e) =>
+                        setGradeTargets({
+                          ...gradeTargets,
+                          [subject]: e.target.value,
+                        })
+                      }
+                      className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
+                    >
+                      {GRADE_TARGETS.map((grade) => (
+                        <option key={grade} value={grade} className="bg-slate-900">
+                          Grade {grade.replace("GRADE_", "")}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
+          {/* Submit Button */}
           <Button
             type="submit"
             disabled={isLoading || !displayName || selectedSubjects.length === 0}
-            className="w-full"
+            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold py-3.5 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:shadow-indigo-500/40 hover:-translate-y-0.5"
           >
-            {isLoading ? "Setting up..." : "Complete Onboarding"}
+            {isLoading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="animate-spin">⚙️</span> Setting up your profile...
+              </span>
+            ) : (
+              "Complete Setup"
+            )}
           </Button>
         </form>
+
+        {/* Footer info */}
+        <div className="text-center text-sm text-slate-400">
+          <p>✨ Personalized learning powered by AI</p>
+        </div>
       </div>
     </div>
   );
