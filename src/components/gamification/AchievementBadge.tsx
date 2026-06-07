@@ -36,36 +36,41 @@ export function AchievementBadge({
   return (
     <div
       className={cn(
-        "relative rounded-xl p-6 text-center transition-all",
+        "group relative rounded-2xl p-6 text-center transition-all duration-300 backdrop-blur-xl animate-fade-in-up",
         unlocked
           ? cn(
               `bg-gradient-to-br ${rarityColors[rarity]}`,
               `border-2 ${rarityBorders[rarity]}`,
-              "shadow-lg hover:shadow-xl hover:scale-105"
+              "shadow-lg hover:shadow-2xl hover:scale-105 hover:-translate-y-2"
             )
-          : "bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 border-2 border-slate-400 dark:border-slate-600 opacity-50"
+          : "bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800 border-2 border-slate-400 dark:border-slate-600 opacity-50 hover:opacity-60"
       )}
     >
-      <div className="text-5xl mb-3">{emoji}</div>
+      <div className={cn(
+        "text-6xl mb-3 transition-transform duration-300",
+        unlocked ? "group-hover:scale-125 group-hover:animate-bounce-slow" : ""
+      )}>
+        {emoji}
+      </div>
       <h3 className={cn(
-        "font-bold text-lg",
-        unlocked ? "text-white" : "text-slate-600 dark:text-slate-400"
+        "font-bold text-lg transition-all",
+        unlocked ? "text-white group-hover:text-white/95" : "text-slate-600 dark:text-slate-400"
       )}>
         {name}
       </h3>
       <p className={cn(
-        "text-sm mt-1",
+        "text-sm mt-1 transition-all",
         unlocked ? "text-white/90" : "text-slate-600 dark:text-slate-500"
       )}>
         {description}
       </p>
       {unlocked && (
-        <div className="mt-3 inline-block px-3 py-1 rounded-full bg-white/20 text-xs font-semibold text-white">
+        <div className="mt-3 inline-block px-3 py-1.5 rounded-full bg-white/25 text-xs font-semibold text-white backdrop-blur-sm hover:bg-white/35 transition-all">
           +{xpReward} XP
         </div>
       )}
       {!unlocked && (
-        <div className="mt-3 inline-block px-3 py-1 rounded-full bg-slate-400/30 text-xs font-semibold text-slate-700 dark:text-slate-400">
+        <div className="mt-3 inline-block px-3 py-1.5 rounded-full bg-slate-400/40 text-xs font-semibold text-slate-700 dark:text-slate-400 uppercase tracking-wider">
           Locked
         </div>
       )}

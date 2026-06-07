@@ -26,20 +26,20 @@ export default async function LeaderboardPage() {
       description="Top students by XP earned"
     >
       {/* Your Rank */}
-      <SectionCard variant="glass">
-        <div className="text-center space-y-2">
-          <p className="text-sm text-indigo-600 dark:text-indigo-400 font-semibold">
+      <SectionCard variant="glass" className="border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 backdrop-blur-xl">
+        <div className="text-center space-y-2 animate-fade-in">
+          <p className="text-sm text-indigo-600 dark:text-indigo-400 font-semibold uppercase tracking-wider">
             YOUR RANK
           </p>
           <div className="flex items-baseline justify-center gap-3">
-            <p className="text-5xl font-bold text-indigo-900 dark:text-indigo-100">
+            <p className="text-6xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
               {userRank ? `#${userRank}` : "Unranked"}
             </p>
             <p className="text-3xl font-bold text-slate-600 dark:text-slate-400">
               {user.studentProfile.totalXP} XP
             </p>
           </div>
-          <p className="text-sm text-indigo-700 dark:text-indigo-300">
+          <p className="text-sm text-indigo-700 dark:text-indigo-300 font-medium">
             Level {user.studentProfile.level}
           </p>
         </div>
@@ -49,11 +49,12 @@ export default async function LeaderboardPage() {
       <SectionCard
         title="Top 50 Students"
         variant="glass"
+        className="border-indigo-200/30 dark:border-indigo-200/20"
       >
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-white/10 dark:border-white/10 bg-white/5 dark:bg-white/5">
+              <tr className="border-b border-indigo-200/30 dark:border-indigo-200/20 bg-indigo-500/10 dark:bg-indigo-500/20">
                 <th className="px-6 py-4 text-left text-sm font-semibold text-slate-900 dark:text-white">
                   Rank
                 </th>
@@ -68,13 +69,13 @@ export default async function LeaderboardPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/10 dark:divide-white/10">
+            <tbody className="divide-y divide-indigo-200/20 dark:divide-indigo-200/10">
               {topStudents.map((student, index) => (
                 <tr
                   key={student.id}
-                  className={`hover:bg-white/5 dark:hover:bg-white/5 transition-colors ${
+                  className={`hover:bg-indigo-500/10 dark:hover:bg-indigo-500/20 transition-colors ${
                     student.id === user.studentProfile!.id
-                      ? "bg-indigo-50/20 dark:bg-indigo-950/20"
+                      ? "bg-indigo-500/20 dark:bg-indigo-500/30 font-semibold"
                       : ""
                   }`}
                 >

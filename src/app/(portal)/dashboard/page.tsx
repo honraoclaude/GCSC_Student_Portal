@@ -63,8 +63,8 @@ export default async function DashboardPage() {
       </div>
 
       {/* ===== PROGRESS STATS SECTION ===== */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">📊 Your Progress</h2>
+      <div className="space-y-4 animate-fade-in">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">📊 Your Progress</h2>
         <div className="grid gap-6 lg:grid-cols-2">
           <StreakCard
             currentStreak={profile.currentStreak}
@@ -76,17 +76,18 @@ export default async function DashboardPage() {
 
       {/* ===== SUBJECTS SECTION ===== */}
       {subjects.length > 0 && (
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+        <div className="space-y-4 animate-fade-in">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
             📚 {subjects.length} Enrolled Subject{subjects.length !== 1 ? "s" : ""}
           </h2>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {subjects.map((enrollment) => (
-              <SubjectCard
-                key={enrollment.id}
-                subject={enrollment.subject}
-                targetGrade={enrollment.targetGrade}
-              />
+            {subjects.map((enrollment, idx) => (
+              <div key={enrollment.id} style={{ animationDelay: `${idx * 50}ms` }} className="animate-fade-in-up">
+                <SubjectCard
+                  subject={enrollment.subject}
+                  targetGrade={enrollment.targetGrade}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -94,12 +95,12 @@ export default async function DashboardPage() {
 
       {/* ===== QUICK ACTIONS ===== */}
       <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">⚡ Quick Actions</h2>
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">⚡ Quick Actions</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-6">
           {/* Success Coach */}
           <Link href="/agents/success">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-indigo-400/50 dark:hover:border-indigo-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-2">🎯</p>
+            <div className="group rounded-xl border border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 backdrop-blur-xl p-4 hover:border-indigo-400/50 dark:hover:border-indigo-400/50 transition-all duration-200 cursor-pointer hover:shadow-xl hover:-translate-y-1 hover:bg-gradient-to-br hover:from-indigo-500/15 hover:to-purple-500/15">
+              <p className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200">🎯</p>
               <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-sm">
                 Success Coach
               </h3>
@@ -111,8 +112,8 @@ export default async function DashboardPage() {
 
           {/* Revision Planner */}
           <Link href="/agents/revision">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-blue-400/50 dark:hover:border-blue-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-2">🔄</p>
+            <div className="group rounded-xl border border-blue-200/30 dark:border-blue-200/20 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 backdrop-blur-xl p-4 hover:border-blue-400/50 dark:hover:border-blue-400/50 transition-all duration-200 cursor-pointer hover:shadow-xl hover:-translate-y-1 hover:bg-gradient-to-br hover:from-blue-500/15 hover:to-cyan-500/15">
+              <p className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200">🔄</p>
               <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-sm">
                 Revision Planner
               </h3>
@@ -124,8 +125,8 @@ export default async function DashboardPage() {
 
           {/* Exam Coach */}
           <Link href="/agents/exam-prep">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-green-400/50 dark:hover:border-green-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-2">📝</p>
+            <div className="group rounded-xl border border-green-200/30 dark:border-green-200/20 bg-gradient-to-br from-green-500/10 to-emerald-500/10 dark:from-green-500/20 dark:to-emerald-500/20 backdrop-blur-xl p-4 hover:border-green-400/50 dark:hover:border-green-400/50 transition-all duration-200 cursor-pointer hover:shadow-xl hover:-translate-y-1 hover:bg-gradient-to-br hover:from-green-500/15 hover:to-emerald-500/15">
+              <p className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200">📝</p>
               <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors text-sm">
                 Exam Coach
               </h3>
@@ -137,8 +138,8 @@ export default async function DashboardPage() {
 
           {/* Flashcards */}
           <Link href="/learning-hub/flashcards">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-purple-400/50 dark:hover:border-purple-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-2">🎴</p>
+            <div className="group rounded-xl border border-purple-200/30 dark:border-purple-200/20 bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 backdrop-blur-xl p-4 hover:border-purple-400/50 dark:hover:border-purple-400/50 transition-all duration-200 cursor-pointer hover:shadow-xl hover:-translate-y-1 hover:bg-gradient-to-br hover:from-purple-500/15 hover:to-pink-500/15">
+              <p className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200">🎴</p>
               <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors text-sm">
                 Flashcards
               </h3>
@@ -150,8 +151,8 @@ export default async function DashboardPage() {
 
           {/* Practice Papers */}
           <Link href="/learning-hub/practice-papers">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-emerald-400/50 dark:hover:border-emerald-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-2">📋</p>
+            <div className="group rounded-xl border border-emerald-200/30 dark:border-emerald-200/20 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 backdrop-blur-xl p-4 hover:border-emerald-400/50 dark:hover:border-emerald-400/50 transition-all duration-200 cursor-pointer hover:shadow-xl hover:-translate-y-1 hover:bg-gradient-to-br hover:from-emerald-500/15 hover:to-teal-500/15">
+              <p className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200">📋</p>
               <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors text-sm">
                 Practice Papers
               </h3>
@@ -163,8 +164,8 @@ export default async function DashboardPage() {
 
           {/* Achievements */}
           <Link href="/achievements">
-            <div className="group rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-4 hover:border-amber-400/50 dark:hover:border-amber-400/50 transition-all cursor-pointer hover:shadow-lg">
-              <p className="text-3xl mb-2">🏆</p>
+            <div className="group rounded-xl border border-amber-200/30 dark:border-amber-200/20 bg-gradient-to-br from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20 backdrop-blur-xl p-4 hover:border-amber-400/50 dark:hover:border-amber-400/50 transition-all duration-200 cursor-pointer hover:shadow-xl hover:-translate-y-1 hover:bg-gradient-to-br hover:from-amber-500/15 hover:to-orange-500/15">
+              <p className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-200">🏆</p>
               <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors text-sm">
                 Achievements
               </h3>

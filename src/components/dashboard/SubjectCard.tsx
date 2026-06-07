@@ -28,15 +28,14 @@ export function SubjectCard({ subject, targetGrade, currentGrade }: SubjectCardP
   return (
     <Link href={`/agents/tutor/${subject.toLowerCase()}`}>
       <div className={cn(
-        cardElevated,
-        "group relative p-6 cursor-pointer overflow-hidden"
+        "group relative p-6 cursor-pointer overflow-hidden rounded-2xl border border-blue-200/30 dark:border-blue-200/20 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 dark:from-blue-500/20 dark:to-cyan-500/20 backdrop-blur-xl hover:border-blue-400/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
       )}>
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 dark:from-blue-500/10 dark:to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 dark:from-blue-500/15 dark:to-cyan-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <div className="relative z-10">
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900/40 dark:to-cyan-900/40">
+              <div className="flex items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-blue-400/30 to-cyan-400/30 dark:from-blue-500/40 dark:to-cyan-500/40 group-hover:scale-110 transition-transform duration-200">
                 <span className="text-2xl">{emoji}</span>
               </div>
               <div>
@@ -70,8 +69,8 @@ export function SubjectCard({ subject, targetGrade, currentGrade }: SubjectCardP
               </div>
             </div>
 
-            <div className="pt-3 border-t border-slate-200 dark:border-slate-700">
-              <div className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors">
+            <div className="pt-3 border-t border-blue-200/30 dark:border-blue-200/20">
+              <div className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 group-hover:gap-3 transition-all">
                 <span>Chat with tutor</span>
                 <span className="group-hover:translate-x-1 transition-transform">→</span>
               </div>

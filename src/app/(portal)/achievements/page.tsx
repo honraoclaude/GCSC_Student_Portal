@@ -41,25 +41,31 @@ export default async function AchievementsPage() {
       description="Unlock badges and celebrate your learning milestones"
     >
       {/* Stats */}
-      <div className="grid gap-6 md:grid-cols-3">
-        <StatCard
-          label="Unlocked"
-          value={unlockedAchievements.length}
-          icon="🎯"
-          colorClass="from-indigo-500 to-blue-500"
-        />
-        <StatCard
-          label="Total Achievements"
-          value={allAchievements.length}
-          icon="🏅"
-          colorClass="from-amber-500 to-orange-500"
-        />
-        <StatCard
-          label="XP Earned"
-          value={totalXpFromAchievements}
-          icon="⭐"
-          colorClass="from-purple-500 to-pink-500"
-        />
+      <div className="grid gap-6 md:grid-cols-3 animate-fade-in">
+        <div className="animate-fade-in-up" style={{ animationDelay: "0ms" }}>
+          <StatCard
+            label="Unlocked"
+            value={unlockedAchievements.length}
+            icon="🎯"
+            colorClass="from-indigo-500 to-blue-500"
+          />
+        </div>
+        <div className="animate-fade-in-up" style={{ animationDelay: "100ms" }}>
+          <StatCard
+            label="Total Achievements"
+            value={allAchievements.length}
+            icon="🏅"
+            colorClass="from-amber-500 to-orange-500"
+          />
+        </div>
+        <div className="animate-fade-in-up" style={{ animationDelay: "200ms" }}>
+          <StatCard
+            label="XP Earned"
+            value={totalXpFromAchievements}
+            icon="⭐"
+            colorClass="from-purple-500 to-pink-500"
+          />
+        </div>
       </div>
 
       {/* Unlocked Achievements */}

@@ -24,28 +24,30 @@ export function PageLayout({
     <div className={cn(sectionSpacing, className)}>
       {/* Header Section */}
       {(title || description || actions) && (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-fade-in">
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1">
               {title && (
-                <h1 className="text-5xl font-black text-slate-900 dark:text-white">
+                <h1 className="text-5xl font-black bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">
                   {title}
                 </h1>
               )}
               {description && (
-                <p className="mt-2 text-lg text-slate-600 dark:text-slate-400">
+                <p className="mt-2 text-lg text-slate-600 dark:text-slate-400 font-medium">
                   {description}
                 </p>
               )}
             </div>
 
-            {actions && <div className="flex-shrink-0">{actions}</div>}
+            {actions && <div className="flex-shrink-0 animate-fade-in-up">{actions}</div>}
           </div>
         </div>
       )}
 
       {/* Content */}
-      {children}
+      <div className="animate-fade-in-up" style={{ animationDelay: "100ms" }}>
+        {children}
+      </div>
     </div>
   );
 }

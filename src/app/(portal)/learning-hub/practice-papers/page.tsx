@@ -94,32 +94,33 @@ export default function PracticePapersPage() {
       </div>
 
       {/* Stats Section */}
-      <div className="grid gap-4 md:grid-cols-3 mb-8">
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-6">
+      <div className="grid gap-4 md:grid-cols-3 mb-8 animate-fade-in">
+        <div className="rounded-xl border border-emerald-200/30 dark:border-emerald-200/20 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 backdrop-blur-xl p-6 hover:border-emerald-400/50 transition-all hover:shadow-lg hover:-translate-y-1">
           <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Total Papers</p>
-          <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{PRACTICE_PAPERS.length}</p>
+          <p className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent mt-2">{PRACTICE_PAPERS.length}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Across all subjects</p>
         </div>
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-6">
+        <div className="rounded-xl border border-emerald-200/30 dark:border-emerald-200/20 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 backdrop-blur-xl p-6 hover:border-emerald-400/50 transition-all hover:shadow-lg hover:-translate-y-1">
           <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Average Duration</p>
-          <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">105 min</p>
+          <p className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent mt-2">105 min</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Realistic exam timing</p>
         </div>
-        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 p-6">
+        <div className="rounded-xl border border-emerald-200/30 dark:border-emerald-200/20 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 backdrop-blur-xl p-6 hover:border-emerald-400/50 transition-all hover:shadow-lg hover:-translate-y-1">
           <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Exam Boards</p>
-          <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">4</p>
+          <p className="text-3xl font-bold bg-gradient-to-r from-emerald-500 to-teal-500 bg-clip-text text-transparent mt-2">4</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Edexcel, AQA, OCR, +1</p>
         </div>
       </div>
 
       {/* Papers Grid */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Available Papers</h2>
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-200 bg-clip-text text-transparent">Available Papers</h2>
         <div className="grid gap-6 md:grid-cols-2">
-          {PRACTICE_PAPERS.map((paper) => (
+          {PRACTICE_PAPERS.map((paper, idx) => (
             <div
               key={paper.id}
-              className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-indigo-400 dark:hover:border-indigo-400 transition-all hover:shadow-lg overflow-hidden"
+              style={{ animationDelay: `${idx * 50}ms` }}
+              className="rounded-2xl border border-emerald-200/30 dark:border-emerald-200/20 bg-gradient-to-br from-white/50 to-slate-50/50 dark:from-slate-800/50 dark:to-slate-900/50 backdrop-blur-xl hover:border-emerald-400/50 dark:hover:border-emerald-400/50 transition-all hover:shadow-xl hover:-translate-y-1 overflow-hidden animate-fade-in-up"
             >
               <div className="p-6 space-y-4">
                 {/* Header */}

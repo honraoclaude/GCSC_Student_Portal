@@ -6,11 +6,11 @@ export default function SuccessCoachPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="space-y-3">
+      <div className="space-y-3 animate-fade-in">
         <div className="flex items-center gap-3">
-          <div className="text-4xl">🎯</div>
+          <div className="text-5xl animate-bounce-slow">🎯</div>
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
               Success Coach
             </h1>
             <p className="mt-1 text-slate-600 dark:text-slate-400">
@@ -23,8 +23,8 @@ export default function SuccessCoachPage() {
       {/* Main Grid */}
       <div className="grid gap-8 lg:grid-cols-3">
         {/* Chat Area */}
-        <div className="lg:col-span-2">
-          <div className="rounded-2xl border border-white/10 dark:border-white/10 bg-white/5 dark:bg-white/5 backdrop-blur-xl overflow-hidden shadow-2xl">
+        <div className="lg:col-span-2 animate-fade-in-up">
+          <div className="rounded-2xl border border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-white/10 to-white/5 dark:from-white/10 dark:to-white/5 backdrop-blur-xl overflow-hidden shadow-2xl hover:shadow-2xl transition-all duration-300">
             <AgentChat
               agentType="STUDENT_SUCCESS"
               agentName="Success Coach"
@@ -36,7 +36,7 @@ export default function SuccessCoachPage() {
         {/* Sidebar */}
         <div className="space-y-4">
           {/* Suggestions Card */}
-          <div className="rounded-2xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/10 to-white/5 dark:from-white/10 dark:to-white/5 backdrop-blur-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+          <div className="rounded-2xl border border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 backdrop-blur-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:border-indigo-400/50">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-2xl">💬</span>
               <h3 className="font-semibold text-slate-900 dark:text-white">
@@ -53,9 +53,9 @@ export default function SuccessCoachPage() {
               ].map((question, i) => (
                 <li
                   key={i}
-                  className="text-sm text-slate-600 dark:text-slate-300 flex items-start gap-2 group"
+                  className="text-sm text-slate-600 dark:text-slate-300 flex items-start gap-2 group cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
                 >
-                  <span className="text-indigo-500 group-hover:text-indigo-400 transition-colors">
+                  <span className="text-indigo-500 group-hover:text-indigo-400 transition-colors transform group-hover:translate-x-1">
                     →
                   </span>
                   <span>"{question}"</span>

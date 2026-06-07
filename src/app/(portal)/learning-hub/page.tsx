@@ -18,15 +18,15 @@ export default function LearningHubPage() {
       </div>
 
       {/* Feature Cards */}
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 animate-fade-in">
         {/* Flashcards - Active */}
-        <Link href="/learning-hub/flashcards">
+        <Link href="/learning-hub/flashcards" className="group">
           <SectionCard
             icon="🎴"
             title="Flashcards"
             description="SM-2 spaced repetition algorithm for optimal learning"
             variant="glass"
-            className="group relative p-8 cursor-pointer overflow-hidden h-full hover:border-indigo-400/50 transition-all"
+            className="relative p-8 cursor-pointer overflow-hidden h-full border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-500/10 to-blue-500/10 dark:from-indigo-500/20 dark:to-blue-500/20 hover:border-indigo-400/50 transition-all hover:shadow-xl hover:-translate-y-1 duration-200"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-blue-500/10 dark:from-indigo-500/20 dark:to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute top-0 right-0 w-40 h-40 bg-indigo-500/20 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-300" />
@@ -40,13 +40,13 @@ export default function LearningHubPage() {
         </Link>
 
         {/* Practice Papers - Active */}
-        <Link href="/learning-hub/practice-papers">
+        <Link href="/learning-hub/practice-papers" className="group">
           <SectionCard
             icon="📋"
             title="Practice Papers"
             description="Realistic GCSE mock exams with instant feedback"
             variant="glass"
-            className="group relative p-8 cursor-pointer overflow-hidden h-full hover:border-emerald-400/50 transition-all"
+            className="relative p-8 cursor-pointer overflow-hidden h-full border-emerald-200/30 dark:border-emerald-200/20 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 hover:border-emerald-400/50 transition-all hover:shadow-xl hover:-translate-y-1 duration-200"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10 dark:from-emerald-500/20 dark:to-teal-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-500/20 rounded-full blur-3xl group-hover:blur-2xl transition-all duration-300" />
@@ -60,7 +60,7 @@ export default function LearningHubPage() {
         </Link>
 
         {/* Notes - Coming Soon */}
-        <div className="relative rounded-2xl border border-slate-400/20 dark:border-slate-400/10 bg-gradient-to-br from-slate-300/10 to-slate-400/10 dark:from-slate-600/10 dark:to-slate-700/10 backdrop-blur p-8 opacity-50 cursor-not-allowed overflow-hidden h-full">
+        <div className="relative rounded-2xl border border-slate-400/20 dark:border-slate-400/10 bg-gradient-to-br from-slate-300/10 to-slate-400/10 dark:from-slate-600/10 dark:to-slate-700/10 backdrop-blur p-8 opacity-60 cursor-not-allowed overflow-hidden h-full hover:opacity-70 transition-opacity duration-200">
           <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/5 to-transparent" />
           <div className="relative z-10 space-y-4">
             <div className="text-6xl opacity-70">📝</div>

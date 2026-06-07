@@ -38,19 +38,19 @@ export default async function DeckDetailPage({ params }: PageProps) {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="space-y-4">
+      <div className="space-y-4 animate-fade-in">
         <Link
           href="/learning-hub/flashcards"
-          className="text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 inline-block"
+          className="text-sm text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 inline-flex items-center gap-1 transition-all hover:gap-2"
         >
           ← Back to Decks
         </Link>
-        <div className="flex items-start justify-between">
-          <div>
-            <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
+        <div className="flex items-start justify-between gap-6">
+          <div className="flex-1">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
               {deck.title}
             </h1>
-            <p className="mt-2 text-slate-600 dark:text-slate-400">
+            <p className="mt-2 text-slate-600 dark:text-slate-400 font-medium">
               {deck.subject.replace(/_/g, " ")}
             </p>
             {deck.description && (
@@ -61,8 +61,8 @@ export default async function DeckDetailPage({ params }: PageProps) {
           </div>
           {deck.cards.length > 0 && (
             <Link href={`/learning-hub/flashcards/${deckId}/study`}>
-              <Button className="bg-green-600 hover:bg-green-700 text-white">
-                Study Now
+              <Button className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg shadow-green-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
+                Study Now 🚀
               </Button>
             </Link>
           )}
@@ -70,16 +70,16 @@ export default async function DeckDetailPage({ params }: PageProps) {
       </div>
 
       {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-6">
+      <div className="grid gap-4 md:grid-cols-2 animate-fade-in-up">
+        <div className="rounded-xl border border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 backdrop-blur-xl p-6 hover:border-indigo-400/50 transition-all hover:shadow-lg hover:-translate-y-1">
           <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
             Cards in Deck
           </p>
-          <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">
+          <p className="mt-2 text-3xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
             {deck.cards.length}
           </p>
         </div>
-        <div className="rounded-xl border border-slate-200 dark:border-slate-700 bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-6">
+        <div className="rounded-xl border border-green-200/30 dark:border-green-200/20 bg-gradient-to-br from-green-500/10 to-emerald-500/10 dark:from-green-500/20 dark:to-emerald-500/20 backdrop-blur-xl p-6 hover:border-green-400/50 transition-all hover:shadow-lg hover:-translate-y-1">
           <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
             Ready to Study
           </p>

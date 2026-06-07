@@ -65,14 +65,14 @@ export default function CreateDeckPage() {
   return (
     <div className="max-w-2xl space-y-8">
       <PageHeader
-        title="Create New Deck"
+        title="✨ Create New Deck"
         description="Start your spaced repetition learning journey"
         backButton={backButton}
       />
 
       {/* Form */}
-      <form onSubmit={form.handleSubmit} className="space-y-6">
-        <PageCard className="space-y-6">
+      <form onSubmit={form.handleSubmit} className="space-y-6 animate-fade-in">
+        <PageCard className="space-y-6 border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 backdrop-blur-xl">
           {submitError && (
             <FormError error={submitError} />
           )}

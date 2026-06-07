@@ -93,17 +93,17 @@ export default function SubjectTutorPage({ params }: PageProps) {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="space-y-3">
+      <div className="space-y-3 animate-fade-in">
         <Link
           href="/dashboard"
-          className="text-sm font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 mb-3 inline-flex items-center gap-1 transition-colors"
+          className="text-sm font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 mb-3 inline-flex items-center gap-1 transition-colors hover:gap-2"
         >
           ← Back to dashboard
         </Link>
         <div className="flex items-center gap-3">
-          <div className="text-5xl">{metadata.emoji}</div>
+          <div className="text-6xl animate-pulse-slow">{metadata.emoji}</div>
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
               {metadata.name} Tutor
             </h1>
             <p className="mt-1 text-slate-600 dark:text-slate-400">
@@ -116,8 +116,8 @@ export default function SubjectTutorPage({ params }: PageProps) {
       {/* Main Grid */}
       <div className="grid gap-8 lg:grid-cols-3">
         {/* Chat Area */}
-        <div className="lg:col-span-2">
-          <div className="rounded-2xl border border-white/10 dark:border-white/10 bg-white/5 dark:bg-white/5 backdrop-blur-xl overflow-hidden shadow-2xl">
+        <div className="lg:col-span-2 animate-fade-in-up">
+          <div className="rounded-2xl border border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-white/10 to-white/5 dark:from-white/10 dark:to-white/5 backdrop-blur-xl overflow-hidden shadow-2xl hover:shadow-2xl transition-all duration-300">
             <AgentChat
               agentType="SUBJECT_TUTOR"
               subject={subject}

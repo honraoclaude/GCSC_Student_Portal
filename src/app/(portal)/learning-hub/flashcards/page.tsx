@@ -30,7 +30,7 @@ export default async function FlashcardsHubPage() {
       description="Create decks and master any subject with SM-2 spaced repetition"
       actions={
         <Link href="/learning-hub/flashcards/new">
-          <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold px-6 py-2.5 rounded-lg shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+          <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold px-6 py-2.5 rounded-lg shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200">
             + New Deck
           </Button>
         </Link>
@@ -38,7 +38,7 @@ export default async function FlashcardsHubPage() {
     >
       {/* Stats */}
       {decks.length > 0 && (
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3 animate-fade-in">
           {[
             { label: "Total Decks", value: decks.length, icon: "📚", color: "from-indigo-500 to-blue-500" },
             { label: "Total Cards", value: totalCards, icon: "🎴", color: "from-purple-500 to-indigo-500" },
@@ -46,7 +46,8 @@ export default async function FlashcardsHubPage() {
           ].map((stat, i) => (
             <div
               key={i}
-              className="rounded-xl border border-white/10 dark:border-white/10 bg-gradient-to-br from-white/5 to-white/5 dark:from-white/5 dark:to-white/5 backdrop-blur p-6 hover:border-white/20 dark:hover:border-white/20 transition-all"
+              style={{ animationDelay: `${i * 100}ms` }}
+              className="rounded-xl border border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 backdrop-blur-xl p-6 hover:border-indigo-400/50 dark:hover:border-indigo-400/50 transition-all hover:shadow-lg hover:-translate-y-1 animate-fade-in-up"
             >
               <div className="flex items-start justify-between">
                 <div>
@@ -57,7 +58,7 @@ export default async function FlashcardsHubPage() {
                     {stat.value}
                   </p>
                 </div>
-                <span className="text-3xl">{stat.icon}</span>
+                <span className="text-3xl group-hover:scale-110 transition-transform">{stat.icon}</span>
               </div>
             </div>
           ))}

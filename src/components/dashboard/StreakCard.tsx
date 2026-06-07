@@ -17,15 +17,16 @@ export function StreakCard({ currentStreak, longestStreak }: StreakCardProps) {
 
   return (
     <div className={cn(
-      cardElevated,
-      "group relative p-8 overflow-hidden"
+      "group relative p-8 overflow-hidden rounded-2xl border border-amber-200/30 dark:border-amber-200/20 bg-gradient-to-br from-amber-500/10 to-orange-500/10 dark:from-amber-500/20 dark:to-orange-500/20 backdrop-blur-xl hover:border-amber-400/50 hover:shadow-lg hover:-translate-y-1 transition-all duration-200"
     )}>
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-amber-500/5 dark:from-orange-500/10 dark:to-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-amber-500/10 dark:from-orange-500/15 dark:to-amber-500/15 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
       <div className="relative z-10 flex items-start justify-between">
         <div className="flex-1">
-          <div className={cn(badgeWarning, "mb-6")}>
-            🔥 Streak
+          <div className="inline-block px-3 py-1 rounded-full bg-gradient-to-r from-amber-400/30 to-orange-400/30 dark:from-amber-500/40 dark:to-orange-500/40 border border-amber-300/40 dark:border-amber-300/20 mb-6">
+            <span className="text-xs font-semibold text-amber-700 dark:text-amber-300 uppercase tracking-wider">
+              🔥 Streak
+            </span>
           </div>
 
           <div className="mb-8">
@@ -42,7 +43,7 @@ export function StreakCard({ currentStreak, longestStreak }: StreakCardProps) {
           </p>
 
           {longestStreak > currentStreak && (
-            <div className="pt-6 border-t border-slate-200 dark:border-slate-700">
+            <div className="pt-6 border-t border-amber-200/30 dark:border-amber-200/20">
               <p className={cn("text-xs", textMuted)}>
                 Personal best:
                 <span className="ml-2 font-bold text-slate-900 dark:text-white">
@@ -53,7 +54,7 @@ export function StreakCard({ currentStreak, longestStreak }: StreakCardProps) {
           )}
         </div>
 
-        <div className="text-8xl opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300">
+        <div className="text-8xl opacity-60 group-hover:opacity-100 group-hover:scale-125 group-hover:animate-bounce-slow transition-all duration-300">
           🔥
         </div>
       </div>
