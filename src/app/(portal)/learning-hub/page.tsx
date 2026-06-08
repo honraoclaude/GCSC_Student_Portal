@@ -82,15 +82,43 @@ export default function LearningHubPage() {
       {/* Features Section */}
       <SectionCard
         title="Why use the Learning Hub?"
+        description="Everything you need to master GCSE subjects"
         variant="glass"
       >
         <div className="grid gap-6 md:grid-cols-3">
           {[
-            { icon: "📊", title: "SM-2 Algorithm", desc: "Scientifically-proven spaced repetition scheduling" },
-            { icon: "⚡", title: "Smart Scheduling", desc: "Difficult cards appear more often for better retention" },
-            { icon: "📈", title: "Progress Tracking", desc: "See your learning progress and earn XP rewards" },
+            {
+              icon: "📊",
+              title: "SM-2 Algorithm",
+              desc: "Scientifically-proven spaced repetition scheduling for optimal retention",
+            },
+            {
+              icon: "⚡",
+              title: "Smart Scheduling",
+              desc: "Difficult cards appear more often for better learning outcomes",
+            },
+            {
+              icon: "📈",
+              title: "Progress Tracking",
+              desc: "See your mastery rate, study streak, and earn achievement badges",
+            },
+            {
+              icon: "🎯",
+              title: "Targeted Practice",
+              desc: "Focus on weak areas with personalized review schedules",
+            },
+            {
+              icon: "⏱️",
+              title: "Time Efficient",
+              desc: "Study in short sessions and maximize retention with better spacing",
+            },
+            {
+              icon: "🏆",
+              title: "Gamified Learning",
+              desc: "Build streaks, earn XP, and compete on the leaderboard",
+            },
           ].map((feature, i) => (
-            <div key={i} className="space-y-3">
+            <div key={i} className="space-y-3 p-4 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-indigo-400/50 transition-all">
               <p className="text-4xl">{feature.icon}</p>
               <h3 className="font-semibold text-slate-900 dark:text-white">
                 {feature.title}

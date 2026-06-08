@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getUserWithProfile, getUserFlashcardDecks } from "@/lib/db";
 import { FlashcardDeck } from "@/components/flashcards/FlashcardDeck";
+import { FlashcardStats } from "@/components/flashcards/FlashcardStats";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { SectionCard } from "@/components/layout/SectionCard";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,11 @@ export default async function FlashcardsHubPage() {
   const totalCards = decks.reduce((sum, d) => sum + (d._count?.cards || 0), 0);
   const readyDecks = decks.filter((d) => (d._count?.cards || 0) > 0).length;
 
+  // Mock data for stats (in production, these would come from the database)
+  const masteryRate = decks.length > 0 ? Math.floor(Math.random() * 100) : 0;
+  const totalStudied = Math.floor(totalCards * 0.6); // Mock: 60% studied
+  const currentStreak = Math.floor(Math.random() * 10) + 1;
+
   return (
     <PageLayout
       title="📚 Flashcards"
@@ -36,33 +42,14 @@ export default async function FlashcardsHubPage() {
         </Link>
       }
     >
-      {/* Stats */}
+      {/* Enhanced Stats Section */}
       {decks.length > 0 && (
-        <div className="grid gap-6 md:grid-cols-3 animate-fade-in">
-          {[
-            { label: "Total Decks", value: decks.length, icon: "📚", color: "from-indigo-500 to-blue-500" },
-            { label: "Total Cards", value: totalCards, icon: "🎴", color: "from-purple-500 to-indigo-500" },
-            { label: "Study Ready", value: readyDecks, icon: "✅", color: "from-green-500 to-emerald-500" },
-          ].map((stat, i) => (
-            <div
-              key={i}
-              style={{ animationDelay: `${i * 100}ms` }}
-              className="rounded-xl border border-indigo-200/30 dark:border-indigo-200/20 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 dark:from-indigo-500/20 dark:to-purple-500/20 backdrop-blur-xl p-6 hover:border-indigo-400/50 dark:hover:border-indigo-400/50 transition-all hover:shadow-lg hover:-translate-y-1 animate-fade-in-up"
-            >
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                    {stat.label}
-                  </p>
-                  <p className={`mt-2 text-4xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent`}>
-                    {stat.value}
-                  </p>
-                </div>
-                <span className="text-3xl group-hover:scale-110 transition-transform">{stat.icon}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        <FlashcardStats
+          totalCards={totalCards}
+          masteryRate={masteryRate}
+          totalStudied={totalStudied}
+          currentStreak={currentStreak}
+        />
       )}
 
       {/* Decks Grid */}

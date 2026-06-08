@@ -199,26 +199,36 @@ export default function PracticePapersPage() {
       </div>
 
       {/* Info Section */}
-      <SectionCard title="How to use Practice Papers" variant="glass">
+      <SectionCard
+        title="How to use Practice Papers"
+        description="Get the most out of your exam preparation"
+        variant="glass"
+      >
         <div className="grid gap-6 md:grid-cols-3">
           {[
             {
               icon: "⏱️",
               title: "Time Yourself",
               desc: "Set a timer to match real exam conditions and build pace and confidence",
+              step: "1",
             },
             {
               icon: "✍️",
               title: "Work Independently",
               desc: "Only check answers after completing the paper to simulate real exam pressure",
+              step: "2",
             },
             {
               icon: "📊",
               title: "Review & Analyze",
               desc: "Get detailed feedback on weak areas and track improvement over time",
+              step: "3",
             },
           ].map((item, i) => (
-            <div key={i} className="space-y-3">
+            <div key={i} className="space-y-3 relative">
+              <div className="absolute top-0 right-0 w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm">
+                {item.step}
+              </div>
               <p className="text-4xl">{item.icon}</p>
               <h3 className="font-semibold text-slate-900 dark:text-white">{item.title}</h3>
               <p className="text-sm text-slate-600 dark:text-slate-400">{item.desc}</p>
