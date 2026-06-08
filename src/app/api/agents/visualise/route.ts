@@ -52,9 +52,20 @@ JAVASCRIPT IMPLEMENTATION RULES — MUST FOLLOW EXACTLY:
 
 5. ALWAYS INCLUDE AN updateSimulation() FUNCTION that:
    - Reads all current state (slider.value, toggle state, etc.)
-   - Recalculates any derived values
-   - Updates ALL visible DOM elements that depend on state
+   - Recalculates any derived values based on the state
+   - UPDATES VISUAL ELEMENTS IMMEDIATELY: change SVG colors, update SVG paths, change CSS classes, modify SVG line positions, update animated elements
+   - REQUIRED VISUAL CHANGES: if a slider moves, something on screen MUST visually change (colors, sizes, positions, opacities, animations)
    - Can be called on every event
+   - Example: if light slider increases, make the sun brighter (change fill color), make the plant greener (change element color), increase a rate number
+
+DO NOT just update text numbers — ALSO change the visual representation!
+
+Examples of what must happen:
+- Light slider → SVG sun color changes from dark to bright yellow
+- Water slider → SVG water level rises/falls
+- Temperature slider → SVG colors shift from blue (cold) to red (hot)
+- Growth slider → Plant SVG grows larger
+- ANY slider → the diagram colors, sizes, or positions CHANGE VISIBLY
 
 CONCRETE EXAMPLE FOR SLIDER (COPY THIS PATTERN):
 
@@ -76,10 +87,11 @@ function updateSimulation() {
 KEY POINT: addEventListener('input') fires on EVERY slider movement. display.textContent updates IMMEDIATELY.
 
 TESTING YOUR CODE (BEFORE YOU RETURN IT):
-- Mentally move a slider: does the number change? If NO, fix the addEventListener
-- Mentally click a button: does something visible happen? If NO, fix the addEventListener
-- Check: is updateSimulation() called on every event? If NO, add it
-- If ANY interaction doesn't produce immediate visual change, THE CODE IS BROKEN — FIX IT
+- Mentally move a slider: does the NUMBER change? (Yes = good) AND does the DIAGRAM visually change? (colors shift, sizes change, SVG elements move)
+- If number changes but diagram doesn't, the code is BROKEN — updateSimulation() is not updating the visual elements
+- Mentally click a button: does something VISUALLY happen? (animation, color change, element appears) If NO, the code is broken
+- Check: in updateSimulation(), am I updating SVG fill colors, SVG element positions, CSS classes, or other visual properties? If NO, ADD THEM
+- CRITICAL: If a slider moves but the simulation diagram looks the same, THE CODE IS BROKEN — FIX IT before returning
 
 SUBJECT PATTERNS:
 - Maths/Physics: animated function plotters, wave/particle sliders, geometric tools
