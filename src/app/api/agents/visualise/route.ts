@@ -74,38 +74,42 @@ HTML:
 <span id="lightValue">50</span>%
 <svg id="mySvg"><circle id="sun" cx="50" cy="50" r="20" fill="#FFD700"></circle></svg>
 
-JavaScript (EXACT pattern — copy this):
-document.addEventListener('DOMContentLoaded', function() {
-  const slider = document.getElementById('lightSlider');
-  const display = document.getElementById('lightValue');
-  const sun = document.getElementById('sun');
+JavaScript (EXACT pattern — PUT THIS AT END OF HTML BEFORE </body>):
+<script>
+const slider = document.getElementById('lightSlider');
+const display = document.getElementById('lightValue');
+const sun = document.getElementById('sun');
 
-  if (!slider || !display || !sun) {
-    console.error('Missing elements!');
-    return;
-  }
+if (!slider || !display || !sun) {
+  console.error('MISSING ELEMENTS - id check failed');
+  document.body.innerHTML += '<p style="color: red; padding: 20px;">ERROR: Elements not found!</p>';
+} else {
+  console.log('All elements found, setting up listeners');
 
   function updateSimulation() {
     const light = parseInt(slider.value);
-    console.log('Slider moved to:', light); // DEBUG LINE
+    console.log('updateSimulation called - light value:', light);
     display.textContent = light;
 
     // CHANGE THE VISUAL: color goes from dark to bright
     const brightness = Math.round((light / 100) * 255);
     const color = 'rgb(' + brightness + ',' + brightness + ',0)';
     sun.setAttribute('fill', color);
-    console.log('Sun color changed to: ' + color); // DEBUG LINE
+    console.log('Sun color changed');
   }
 
-  // ATTACH EVENT LISTENER
+  // ATTACH EVENT LISTENER to slider
   slider.addEventListener('input', function() {
-    console.log('Input event fired!'); // DEBUG LINE
+    console.log('SLIDER MOVED - input event fired');
     updateSimulation();
   });
 
   // Call once on page load to show initial state
+  console.log('Calling updateSimulation on page load');
   updateSimulation();
-});
+  console.log('Setup complete - sliders should now work');
+}
+</script>
 
 KEY POINTS:
 - addEventListener('input') fires on EVERY slider touch/movement
@@ -132,7 +136,10 @@ SUBJECT PATTERNS:
 
 TECHNICAL:
 - SVGs: viewBox set, width="100%"
-- All JS inside a single DOMContentLoaded listener, wrapped in try/catch
+- CRITICAL: PUT ALL JAVASCRIPT IN A <script> TAG AT THE END OF </body> (NOT in DOMContentLoaded)
+  This ensures all HTML elements are loaded BEFORE JavaScript runs
+- Add console.log on EVERY major step: element setup, listener attachment, updateSimulation calls
+- If elements are missing, show an error message on screen (not just console)
 - Use const/let only; never var; never document.write()
 - Do not access window.parent, window.top, document.cookie, or localStorage
 - Use requestAnimationFrame with a stop flag; never setInterval for rendering loops
