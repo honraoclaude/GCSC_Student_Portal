@@ -50,7 +50,14 @@ JAVASCRIPT IMPLEMENTATION RULES — MUST FOLLOW EXACTLY:
    - var — ONLY use const/let
    - Relying on auto-wiring — ALWAYS test querySelector first
 
-5. ALWAYS INCLUDE AN updateSimulation() FUNCTION that:
+5. REQUIRED: Use THESE EXACT ELEMENT IDs (not variations):
+   - Sliders: id="mySlider" or id="slider1", id="slider2", etc.
+   - Value displays: id="myValue" or id="value1", id="value2", etc.
+   - Buttons: id="myButton" or id="button1", id="button2", etc.
+   - SVG diagrams: id="mySvg" or id="diagram"
+   MAKE SURE JavaScript getElementById() calls match these exact IDs
+
+6. ALWAYS INCLUDE AN updateSimulation() FUNCTION that:
    - Reads all current state (slider.value, toggle state, etc.)
    - Recalculates any derived values based on the state
    - UPDATES VISUAL ELEMENTS IMMEDIATELY: change SVG colors, update SVG paths, change CSS classes, modify SVG line positions, update animated elements
@@ -74,40 +81,35 @@ HTML:
 <span id="lightValue">50</span>%
 <svg id="mySvg"><circle id="sun" cx="50" cy="50" r="20" fill="#FFD700"></circle></svg>
 
-JavaScript (EXACT pattern — PUT THIS AT END OF HTML BEFORE </body>):
+JavaScript (EXACT MINIMAL WORKING PATTERN):
+At the VERY END of HTML, right before </body>, include EXACTLY this:
+
 <script>
-const slider = document.getElementById('lightSlider');
-const display = document.getElementById('lightValue');
-const sun = document.getElementById('sun');
+try {
+  console.log('SCRIPT STARTED');
 
-if (!slider || !display || !sun) {
-  console.error('MISSING ELEMENTS - id check failed');
-  document.body.innerHTML += '<p style="color: red; padding: 20px;">ERROR: Elements not found!</p>';
-} else {
-  console.log('All elements found, setting up listeners');
+  const slider = document.getElementById('mySlider');
+  const display = document.getElementById('myValue');
 
-  function updateSimulation() {
-    const light = parseInt(slider.value);
-    console.log('updateSimulation called - light value:', light);
-    display.textContent = light;
+  console.log('Found slider:', slider ? 'YES' : 'NO');
+  console.log('Found display:', display ? 'YES' : 'NO');
 
-    // CHANGE THE VISUAL: color goes from dark to bright
-    const brightness = Math.round((light / 100) * 255);
-    const color = 'rgb(' + brightness + ',' + brightness + ',0)';
-    sun.setAttribute('fill', color);
-    console.log('Sun color changed');
+  if (slider && display) {
+    console.log('SETUP: Adding event listener to slider');
+
+    slider.addEventListener('input', function(e) {
+      console.log('EVENT: Slider input fired, value =', this.value);
+      display.textContent = this.value;
+    });
+
+    console.log('SETUP: Event listener attached successfully');
+  } else {
+    console.error('ERROR: Elements not found!');
+    alert('Script Error: slider or display element missing');
   }
-
-  // ATTACH EVENT LISTENER to slider
-  slider.addEventListener('input', function() {
-    console.log('SLIDER MOVED - input event fired');
-    updateSimulation();
-  });
-
-  // Call once on page load to show initial state
-  console.log('Calling updateSimulation on page load');
-  updateSimulation();
-  console.log('Setup complete - sliders should now work');
+} catch (err) {
+  console.error('Script error:', err);
+  alert('Script Error: ' + err.message);
 }
 </script>
 
@@ -120,11 +122,19 @@ KEY POINTS:
 - MUST call updateSimulation() once after setting up the listener (shows initial state)
 
 TESTING YOUR CODE (BEFORE YOU RETURN IT):
-- Mentally move a slider: does the NUMBER change? (Yes = good) AND does the DIAGRAM visually change? (colors shift, sizes change, SVG elements move)
-- If number changes but diagram doesn't, the code is BROKEN — updateSimulation() is not updating the visual elements
-- Mentally click a button: does something VISUALLY happen? (animation, color change, element appears) If NO, the code is broken
-- Check: in updateSimulation(), am I updating SVG fill colors, SVG element positions, CSS classes, or other visual properties? If NO, ADD THEM
-- CRITICAL: If a slider moves but the simulation diagram looks the same, THE CODE IS BROKEN — FIX IT before returning
+CRITICAL DEBUGGING CHECKLIST:
+1. Do the HTML element IDs match the JavaScript getElementById() calls exactly? (e.g., HTML: id="mySlider", JS: getElementById('mySlider'))
+   If not, the listener will never attach and nothing will work.
+2. Is the <script> tag at the VERY END of the HTML file, right before </body>?
+   If not, elements won't be loaded when script runs.
+3. Does the script have try/catch and console.log statements?
+   If not, errors will be silent.
+4. When user moves slider mentally: Does console show "EVENT: Slider input fired"?
+   If NO: IDs don't match or listener didn't attach
+5. Does display.textContent actually update in the HTML?
+   If YES: basic slider works. Now add visual changes.
+6. Do SVG/visual elements change when slider moves?
+   If NO: updateSimulation() must read slider.value and change SVG attributes
 
 SUBJECT PATTERNS:
 - Maths/Physics: animated function plotters, wave/particle sliders, geometric tools
