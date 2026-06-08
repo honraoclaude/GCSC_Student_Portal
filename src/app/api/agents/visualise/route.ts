@@ -342,13 +342,25 @@ Subject area: ${subject ?? "General GCSE"}`;
 '})();\n' +
 '</script>';
 
-    // Insert AFTER the last </script> but BEFORE </body>
-    const bodyEndIndex = html.lastIndexOf('</body>');
+    // Insert BEFORE </body> (case-insensitive)
+    const bodyEndIndex = html.toLowerCase().lastIndexOf('</body>');
     if (bodyEndIndex > -1) {
-      html = html.substring(0, bodyEndIndex) + '\n' + universalFixScript + '\n' + html.substring(bodyEndIndex);
+      // Found </body>, insert before it
+      html = html.substring(0, bodyEndIndex) + universalFixScript + html.substring(bodyEndIndex);
     } else {
-      // No </body> tag, append at end
-      html = html + '\n' + universalFixScript;
+      // No </body> found, try </html>
+      const htmlEndIndex = html.toLowerCase().lastIndexOf('</html>');
+      if (htmlEndIndex > -1) {
+        html = html.substring(0, htmlEndIndex) + universalFixScript + html.substring(htmlEndIndex);
+      } else {
+        // Neither found, just append
+        html = html + universalFixScript;
+      }
+    }
+
+    // Debug: verify injection worked
+    if (!html.includes('(self.__next_f = self.__next_f')) {
+      console.log('WARNING: Universal script may not have been injected');
     }
 
     return new Response(
