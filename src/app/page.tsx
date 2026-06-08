@@ -8,6 +8,8 @@ import CounterStat from "@/components/home/CounterStat";
 import TestimonialCard from "@/components/home/TestimonialCard";
 import { HeroButtons } from "@/components/home/HeroButtons";
 import { CTASection } from "@/components/home/CTASection";
+import { HeroShowcase } from "@/components/home/HeroShowcase";
+import { ImageGuide } from "@/components/home/ImageGuide";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -68,6 +70,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Showcase Section */}
+      <HeroShowcase />
 
       {/* Features Grid Section */}
       <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-orange-50 dark:from-slate-900 dark:to-orange-950 dark:bg-opacity-50">
@@ -202,6 +207,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* Image Generation Guide */}
+      <ImageGuide />
 
       {/* CTA Section */}
       <CTASection />
