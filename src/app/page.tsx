@@ -1,6 +1,12 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { buttonPrimary, buttonSecondary, heroSection } from "@/styles";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/cards/Card";
+import { FadeIn } from "@/components/animations/FadeIn";
+import { SlideUp } from "@/components/animations/SlideUp";
+import { Footer } from "@/components/layout/Footer";
+import CounterStat from "@/components/home/CounterStat";
+import TestimonialCard from "@/components/home/TestimonialCard";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -10,56 +16,247 @@ export default async function Home() {
   }
 
   return (
-    <div className={heroSection}>
-      <div className="space-y-8 text-center animate-fade-in">
-        <div className="space-y-3 animate-fade-in-up">
-          <h1 className="text-5xl font-bold sm:text-7xl bg-gradient-to-r from-white via-slate-100 to-white bg-clip-text text-transparent">
-            GCSC Student Hub
-          </h1>
-          <p className="text-xl text-slate-300 font-medium">
-            Your AI-powered GCSE success platform
-          </p>
-        </div>
+    <main className="w-full">
+      {/* Hero Section */}
+      <section className="min-h-screen bg-gradient-to-b from-white to-blue-50 dark:from-slate-900 dark:to-blue-950 px-4 sm:px-6 lg:px-8 flex items-center">
+        <div className="max-w-6xl mx-auto w-full">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Text Content */}
+            <div className="flex flex-col justify-center">
+              <FadeIn duration={300}>
+                <SlideUp duration={300} delay={0}>
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-4 font-display">
+                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+                      Your AI-Powered GCSE Success Platform
+                    </span>
+                  </h1>
+                </SlideUp>
+              </FadeIn>
 
-        <p className="max-w-lg mx-auto text-slate-400 text-lg">
-          Master GCSE with personalized AI tutoring, study planning, and gamified
-          learning.
-        </p>
+              <SlideUp duration={300} delay={100}>
+                <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed mb-6 max-w-md">
+                  Master every subject with personalized AI tutors, revision plans, and expert guidance
+                </p>
+              </SlideUp>
 
-        <div className="flex flex-col gap-4 sm:flex-row justify-center animate-fade-in-up" style={{ animationDelay: "200ms" }}>
-          <a
-            href="/sign-up"
-            className={`${buttonPrimary} h-12 px-8 shadow-lg shadow-indigo-500/30 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 font-semibold`}
-          >
-            Get Started 🚀
-          </a>
-          <a
-            href="/sign-in"
-            className={`${buttonSecondary} h-12 px-8 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 font-semibold`}
-          >
-            Sign In
-          </a>
-        </div>
+              <SlideUp duration={300} delay={150}>
+                <div className="flex items-center gap-2 mb-8 text-sm font-semibold text-slate-600 dark:text-slate-400">
+                  <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Trusted by 50,000+ UK students
+                </div>
+              </SlideUp>
 
-        {/* Feature highlights */}
-        <div className="mt-16 grid gap-6 md:grid-cols-3 max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "400ms" }}>
-          <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-indigo-400/50 hover:bg-white/10 transition-all">
-            <div className="text-3xl mb-2">🤖</div>
-            <h3 className="font-semibold text-white mb-1">AI Tutoring</h3>
-            <p className="text-sm text-slate-300">Expert guidance for every subject</p>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-indigo-400/50 hover:bg-white/10 transition-all">
-            <div className="text-3xl mb-2">🎴</div>
-            <h3 className="font-semibold text-white mb-1">Smart Flashcards</h3>
-            <p className="text-sm text-slate-300">SM-2 spaced repetition</p>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl p-6 hover:border-indigo-400/50 hover:bg-white/10 transition-all">
-            <div className="text-3xl mb-2">🏆</div>
-            <h3 className="font-semibold text-white mb-1">Gamification</h3>
-            <p className="text-sm text-slate-300">Earn XP and unlock badges</p>
+              <SlideUp duration={300} delay={200}>
+                <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                  <Button
+                    variant="primary"
+                    size="md"
+                    className="h-12 px-8 text-base"
+                    onClick={() => window.location.href = "/sign-up"}
+                  >
+                    Start Free Trial
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="md"
+                    className="h-12 px-8 text-base border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800/50"
+                    onClick={() => window.location.href = "#features"}
+                  >
+                    See Demo
+                  </Button>
+                </div>
+              </SlideUp>
+            </div>
+
+            {/* Right Column - Hero Image Placeholder */}
+            <FadeIn duration={300} delay={300}>
+              <div className="hidden lg:block w-full">
+                <div className="w-full aspect-square rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 border-2 border-blue-200 dark:border-blue-800 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="text-6xl mb-4">🎓</div>
+                    <p className="text-slate-600 dark:text-slate-400">Hero Image</p>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      {/* Features Grid Section */}
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn>
+            <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16 font-display text-slate-900 dark:text-white">
+              Why Choose GCSC Hub?
+            </h2>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "AI Tutors That Adapt to You",
+                description: "8 specialized AI agents covering every subject and learning style",
+                delay: 0,
+              },
+              {
+                title: "Revision Made Intelligent",
+                description: "SM-2 spaced repetition meets AI-generated flashcards",
+                delay: 50,
+              },
+              {
+                title: "Connect with Real Tutors",
+                description: "Book verified tutors, connect instantly, track progress",
+                delay: 100,
+              },
+            ].map((feature, index) => (
+              <SlideUp key={index} delay={feature.delay} duration={300}>
+                <Card
+                  variant="default"
+                  hoverable
+                  className="p-8 border-2 border-blue-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-lg hover:scale-105 transition-all duration-200 h-full flex flex-col"
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 mb-6 flex items-center justify-center text-white text-xl">
+                    {index === 0 && "🤖"}
+                    {index === 1 && "📚"}
+                    {index === 2 && "👥"}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-3 text-slate-900 dark:text-white">
+                    {feature.title}
+                  </h3>
+                  <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed flex-grow">
+                    {feature.description}
+                  </p>
+                  <a
+                    href="#"
+                    className="mt-4 text-blue-600 dark:text-blue-400 font-semibold text-sm hover:underline"
+                  >
+                    Explore →
+                  </a>
+                </Card>
+              </SlideUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-purple-50 dark:from-blue-900/10 dark:to-purple-900/10">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn>
+            <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16 font-display text-slate-900 dark:text-white">
+              Loved by Students
+            </h2>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              {
+                name: "Sarah Ahmed",
+                achievement: "Improved from Grade 5 to Grade 9",
+                quote: "The AI tutors helped me understand difficult concepts in minutes!",
+                avatar: "👩",
+              },
+              {
+                name: "James Chen",
+                achievement: "Improved from Grade 6 to Grade 8",
+                quote: "Smart flashcards made revision so much more effective.",
+                avatar: "👨",
+              },
+              {
+                name: "Emma Wilson",
+                achievement: "Achieved Grade 9 in 5 subjects",
+                quote: "Best investment for my GCSE prep. Absolutely worth it!",
+                avatar: "👩‍🦰",
+              },
+              {
+                name: "Marcus Johnson",
+                achievement: "Improved from Grade 4 to Grade 7",
+                quote: "The real tutors on the marketplace gave me personalized help.",
+                avatar: "👨‍🦱",
+              },
+            ].map((testimonial, index) => (
+              <SlideUp key={index} delay={index * 50} duration={300}>
+                <TestimonialCard testimonial={testimonial} />
+              </SlideUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Statistics Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
+        <div className="max-w-6xl mx-auto">
+          <FadeIn>
+            <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16 font-display text-slate-900 dark:text-white">
+              By The Numbers
+            </h2>
+          </FadeIn>
+
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { number: 50000, label: "Active Students", suffix: "+" },
+              { number: 8, label: "AI Agents", suffix: "" },
+              { number: 10000, label: "Tutors Available", suffix: "+" },
+              { number: 98, label: "Success Rate", suffix: "%" },
+            ].map((stat, index) => (
+              <SlideUp key={index} delay={index * 100} duration={300}>
+                <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-2 border-blue-200 dark:border-slate-700 rounded-lg p-8 text-center">
+                  <CounterStat
+                    target={stat.number}
+                    suffix={stat.suffix}
+                    delay={index * 200}
+                  />
+                  <p className="text-slate-600 dark:text-slate-400 text-sm font-medium mt-4">
+                    {stat.label}
+                  </p>
+                </div>
+              </SlideUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-700 dark:to-purple-700">
+        <div className="max-w-2xl mx-auto text-center">
+          <FadeIn>
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4 font-display text-white">
+              Ready to Transform Your Grades?
+            </h2>
+            <p className="text-lg text-white/90 mb-8">
+              Join 50,000+ students improving with AI
+            </p>
+
+            <form
+              className="flex flex-col gap-4 max-w-sm mx-auto"
+              onSubmit={(e) => {
+                e.preventDefault();
+                window.location.href = "/sign-up";
+              }}
+            >
+              <input
+                type="email"
+                placeholder="your.email@example.com"
+                required
+                className="px-6 py-3 rounded-lg text-slate-900 placeholder-slate-500 border-2 border-transparent focus:border-blue-400 focus:outline-none transition-all"
+              />
+              <Button
+                variant="secondary"
+                size="md"
+                className="h-12 w-full bg-white text-blue-600 hover:bg-blue-50 font-semibold"
+              >
+                Start Free Trial
+              </Button>
+            </form>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <Footer />
+    </main>
   );
 }
