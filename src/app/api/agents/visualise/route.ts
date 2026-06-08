@@ -74,72 +74,97 @@ Examples of what must happen:
 - Growth slider → Plant SVG grows larger
 - ANY slider → the diagram colors, sizes, or positions CHANGE VISIBLY
 
-COPY-PASTE-READY WORKING EXAMPLE:
-You MUST follow this structure EXACTLY. Change only the values and colors, not the IDs or structure.
+WORKING EXAMPLE - MUST COPY EXACTLY:
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulation</title>
 <style>
-  body { background: #0F172A; color: #F1F5F9; font-family: sans-serif; padding: 20px; }
-  .control { margin: 20px 0; }
-  input[type="range"] { width: 100%; }
-  #slider1Value { color: #FF6B6B; font-weight: bold; margin-left: 10px; }
+body { background: #0F172A; color: #F1F5F9; font-family: Arial, sans-serif; padding: 20px; margin: 0; }
+h1 { color: #FF6B6B; }
+.slider-group { margin: 20px 0; padding: 15px; background: #1E293B; border-radius: 8px; }
+label { display: block; margin-bottom: 8px; color: #FF8C42; font-weight: bold; }
+input[type="range"] { width: 100%; cursor: pointer; }
+.value-display { color: #06D6A0; font-weight: bold; font-size: 16px; margin-top: 5px; }
+button { padding: 10px 20px; margin: 10px 0; background: #FF6B6B; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+button:hover { background: #FF8C42; }
 </style>
 </head>
 <body>
 
-<h1>Example Simulation</h1>
-<p>This is a working template.</p>
+<h1>Interactive Simulation</h1>
+<p>Move sliders to see changes.</p>
 
-<div class="control">
-  <label>Light Level</label>
+<div class="slider-group">
+  <label for="slider1">Light Intensity</label>
   <input type="range" id="slider1" min="0" max="100" value="50">
-  <span id="slider1Value">50</span>%
+  <div class="value-display">Value: <span id="slider1Value">50</span></div>
 </div>
 
-<button id="button1">Click Me</button>
+<div class="slider-group">
+  <label for="slider2">Water Level</label>
+  <input type="range" id="slider2" min="0" max="100" value="50">
+  <div class="value-display">Value: <span id="slider2Value">50</span></div>
+</div>
+
+<button id="button1">Start</button>
+<button id="button2">Reset</button>
 
 <script>
-try {
-  console.log('SCRIPT LOADED');
-  const slider1 = document.getElementById('slider1');
-  const slider1Value = document.getElementById('slider1Value');
-  const button1 = document.getElementById('button1');
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    console.log('DOMContentLoaded fired - setting up sliders');
 
-  console.log('Elements found - slider1:', !!slider1, 'value:', !!slider1Value, 'button:', !!button1);
+    // Slider 1
+    const slider1 = document.getElementById('slider1');
+    const slider1Value = document.getElementById('slider1Value');
+    if (slider1 && slider1Value) {
+      slider1.addEventListener('input', function() {
+        console.log('slider1 moved:', this.value);
+        slider1Value.textContent = this.value;
+      });
+    }
 
-  if (!slider1 || !slider1Value) {
-    alert('ERROR: Missing slider1 or slider1Value element!');
-  } else {
-    slider1.addEventListener('input', function() {
-      console.log('SLIDER MOVED to', this.value);
-      slider1Value.textContent = this.value;
-    });
-    console.log('Slider listener attached');
+    // Slider 2
+    const slider2 = document.getElementById('slider2');
+    const slider2Value = document.getElementById('slider2Value');
+    if (slider2 && slider2Value) {
+      slider2.addEventListener('input', function() {
+        console.log('slider2 moved:', this.value);
+        slider2Value.textContent = this.value;
+      });
+    }
+
+    // Button 1
+    const button1 = document.getElementById('button1');
+    if (button1) {
+      button1.addEventListener('click', function() {
+        console.log('Button 1 clicked');
+        alert('Button 1 works!');
+      });
+    }
+
+    console.log('All listeners attached successfully');
+  } catch (err) {
+    console.error('Setup failed:', err);
+    alert('Script error: ' + err.message);
   }
-
-  if (button1) {
-    button1.addEventListener('click', function() {
-      console.log('BUTTON CLICKED');
-      alert('Button works!');
-    });
-  }
-} catch (err) {
-  console.error('Setup error:', err);
-  alert('ERROR: ' + err.message);
-}
+});
 </script>
 
 </body>
 </html>
 
-CRITICAL RULES:
-1. HTML element MUST have id="slider1" (or slider2, slider3 for multiple)
-2. JavaScript MUST call getElementById('slider1') - IDs MUST MATCH EXACTLY
-3. <script> tag MUST be at end of body, before </body>
-4. Include try/catch and alert() for errors
-5. Include console.log on every major step
+RULES - DO NOT DEVIATE:
+1. MUST use document.addEventListener('DOMContentLoaded', ...)
+2. MUST use getElementById() for each element - IDs slider1, slider2, slider3... button1, button2...
+3. MUST attach addEventListener('input') to sliders and addEventListener('click') to buttons
+4. MUST log to console on every event: console.log('slider1 moved:', value)
+5. MUST have try/catch around all setup
+6. Change ONLY: title, labels, value ranges. Do NOT change IDs, element structure, or addEventListener patterns
 
 KEY POINTS:
 - addEventListener('input') fires on EVERY slider touch/movement
