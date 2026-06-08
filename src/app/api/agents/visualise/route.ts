@@ -57,29 +57,23 @@ JAVASCRIPT IMPLEMENTATION RULES — MUST FOLLOW EXACTLY:
    - Can be called on every event
 
 CONCRETE EXAMPLE FOR SLIDER (COPY THIS PATTERN):
-```html
-<div>
-  <label>Light Intensity: <span id="lightValue">50</span>%</label>
-  <input type="range" id="lightSlider" min="0" max="100" value="50">
-</div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const lightSlider = document.getElementById('lightSlider');
-  const lightValue = document.getElementById('lightValue');
+HTML Element:
+<input type="range" id="lightSlider" min="0" max="100" value="50">
+<span id="lightValue">50</span>%
 
-  lightSlider.addEventListener('input', function() {
-    lightValue.textContent = this.value;  // Update display IMMEDIATELY
-    updateSimulation();
-  });
-
-  function updateSimulation() {
-    const light = parseInt(lightSlider.value);
-    // Use light value to update diagram, color, animation, etc.
-  }
+JavaScript Setup (MUST be inside DOMContentLoaded):
+const slider = document.getElementById('lightSlider');
+const display = document.getElementById('lightValue');
+slider.addEventListener('input', function() {
+  display.textContent = this.value;
+  updateSimulation();
 });
-</script>
-```
+function updateSimulation() {
+  const light = parseInt(slider.value);
+}
+
+KEY POINT: addEventListener('input') fires on EVERY slider movement. display.textContent updates IMMEDIATELY.
 
 TESTING YOUR CODE (BEFORE YOU RETURN IT):
 - Mentally move a slider: does the number change? If NO, fix the addEventListener
