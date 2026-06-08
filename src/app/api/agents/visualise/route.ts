@@ -298,68 +298,49 @@ Subject area: ${subject ?? "General GCSE"}`;
 
     // GUARANTEED FIX: Always inject a universal initialization script at the very end
     // This ensures ALL sliders and buttons work, regardless of what Claude generated
-    const universalFixScript = `<script>
-// Universal slider and button initializer - runs after everything else
-(function() {
-  function initializeInteractivity() {
-    console.log('Universal init: Checking for sliders and buttons');
-
-    // Initialize ALL sliders with generic handler
-    const sliders = document.querySelectorAll('input[type="range"]');
-    console.log('Found ' + sliders.length + ' sliders');
-
-    sliders.forEach(slider => {
-      // Remove existing listeners by cloning (to reset)
-      // Then add our guaranteed listener
-      slider.addEventListener('input', function() {
-        console.log('SLIDER EVENT: ' + this.id + ' = ' + this.value);
-
-        // Strategy 1: Look for span with id + 'Value'
-        let display = document.getElementById(this.id + 'Value');
-        if (display) {
-          display.textContent = this.value;
-          console.log('Updated display: ' + this.id + 'Value');
-        }
-
-        // Strategy 2: Look for next span with class 'value-number' or similar
-        if (!display) {
-          const parent = this.closest('.slider-group') || this.closest('div');
-          if (parent) {
-            display = parent.querySelector('.value-number, [class*="value"], span[class*="display"]');
-            if (display) {
-              display.textContent = this.value;
-              console.log('Updated display via parent search');
-            }
-          }
-        }
-      });
-
-      // Trigger initial display
-      slider.dispatchEvent(new Event('input'));
-    });
-
-    // Initialize ALL buttons
-    const buttons = document.querySelectorAll('button');
-    console.log('Found ' + buttons.length + ' buttons');
-
-    buttons.forEach(button => {
-      button.addEventListener('click', function() {
-        console.log('BUTTON CLICKED: ' + (this.id || this.textContent));
-      });
-    });
-
-    console.log('✓ Universal initialization complete');
-  }
-
-  // Run on DOMContentLoaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeInteractivity);
-  } else {
-    // DOM already loaded, run immediately
-    initializeInteractivity();
-  }
-})();
-</script>`;
+    const universalFixScript = '<script>\n' +
+'(function() {\n' +
+'  function initializeInteractivity() {\n' +
+'    console.log("Universal init: Checking for sliders and buttons");\n' +
+'    const sliders = document.querySelectorAll("input[type=\\"range\\"]");\n' +
+'    console.log("Found " + sliders.length + " sliders");\n' +
+'    sliders.forEach(slider => {\n' +
+'      slider.addEventListener("input", function() {\n' +
+'        console.log("SLIDER EVENT: " + this.id + " = " + this.value);\n' +
+'        let display = document.getElementById(this.id + "Value");\n' +
+'        if (display) {\n' +
+'          display.textContent = this.value;\n' +
+'          console.log("Updated display: " + this.id + "Value");\n' +
+'        }\n' +
+'        if (!display) {\n' +
+'          const parent = this.closest(".slider-group") || this.closest("div");\n' +
+'          if (parent) {\n' +
+'            display = parent.querySelector(".value-number, [class*=\\"value\\"], span[class*=\\"display\\"]");\n' +
+'            if (display) {\n' +
+'              display.textContent = this.value;\n' +
+'              console.log("Updated display via parent search");\n' +
+'            }\n' +
+'          }\n' +
+'        }\n' +
+'      });\n' +
+'      slider.dispatchEvent(new Event("input"));\n' +
+'    });\n' +
+'    const buttons = document.querySelectorAll("button");\n' +
+'    console.log("Found " + buttons.length + " buttons");\n' +
+'    buttons.forEach(button => {\n' +
+'      button.addEventListener("click", function() {\n' +
+'        console.log("BUTTON CLICKED: " + (this.id || this.textContent));\n' +
+'      });\n' +
+'    });\n' +
+'    console.log("Universal initialization complete");\n' +
+'  }\n' +
+'  if (document.readyState === "loading") {\n' +
+'    document.addEventListener("DOMContentLoaded", initializeInteractivity);\n' +
+'  } else {\n' +
+'    initializeInteractivity();\n' +
+'  }\n' +
+'})();\n' +
+'</script>';
 
     // Insert AFTER the last </script> but BEFORE </body>
     const bodyEndIndex = html.lastIndexOf('</body>');
