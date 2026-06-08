@@ -1,12 +1,13 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/cards/Card";
 import { FadeIn } from "@/components/animations/FadeIn";
 import { SlideUp } from "@/components/animations/SlideUp";
 import { Footer } from "@/components/layout/Footer";
 import CounterStat from "@/components/home/CounterStat";
 import TestimonialCard from "@/components/home/TestimonialCard";
+import { HeroButtons } from "@/components/home/HeroButtons";
+import { CTASection } from "@/components/home/CTASection";
 
 export default async function Home() {
   const { userId } = await auth();
@@ -49,24 +50,7 @@ export default async function Home() {
               </SlideUp>
 
               <SlideUp duration={300} delay={200}>
-                <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                  <Button
-                    variant="primary"
-                    size="md"
-                    className="h-12 px-8 text-base"
-                    onClick={() => window.location.href = "/sign-up"}
-                  >
-                    Start Free Trial
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="md"
-                    className="h-12 px-8 text-base border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-slate-800/50"
-                    onClick={() => window.location.href = "#features"}
-                  >
-                    See Demo
-                  </Button>
-                </div>
+                <HeroButtons />
               </SlideUp>
             </div>
 
@@ -220,40 +204,7 @@ export default async function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-700 dark:to-purple-700">
-        <div className="max-w-2xl mx-auto text-center">
-          <FadeIn>
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4 font-display text-white">
-              Ready to Transform Your Grades?
-            </h2>
-            <p className="text-lg text-white/90 mb-8">
-              Join 50,000+ students improving with AI
-            </p>
-
-            <form
-              className="flex flex-col gap-4 max-w-sm mx-auto"
-              onSubmit={(e) => {
-                e.preventDefault();
-                window.location.href = "/sign-up";
-              }}
-            >
-              <input
-                type="email"
-                placeholder="your.email@example.com"
-                required
-                className="px-6 py-3 rounded-lg text-slate-900 placeholder-slate-500 border-2 border-transparent focus:border-blue-400 focus:outline-none transition-all"
-              />
-              <Button
-                variant="secondary"
-                size="md"
-                className="h-12 w-full bg-white text-blue-600 hover:bg-blue-50 font-semibold"
-              >
-                Start Free Trial
-              </Button>
-            </form>
-          </FadeIn>
-        </div>
-      </section>
+      <CTASection />
 
       {/* Footer */}
       <Footer />
