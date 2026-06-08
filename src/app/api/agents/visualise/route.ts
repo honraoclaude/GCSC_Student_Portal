@@ -74,44 +74,72 @@ Examples of what must happen:
 - Growth slider → Plant SVG grows larger
 - ANY slider → the diagram colors, sizes, or positions CHANGE VISIBLY
 
-CONCRETE COMPLETE WORKING EXAMPLE (COPY THIS PATTERN EXACTLY):
+COPY-PASTE-READY WORKING EXAMPLE:
+You MUST follow this structure EXACTLY. Change only the values and colors, not the IDs or structure.
 
-HTML:
-<input type="range" id="lightSlider" min="0" max="100" value="50">
-<span id="lightValue">50</span>%
-<svg id="mySvg"><circle id="sun" cx="50" cy="50" r="20" fill="#FFD700"></circle></svg>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { background: #0F172A; color: #F1F5F9; font-family: sans-serif; padding: 20px; }
+  .control { margin: 20px 0; }
+  input[type="range"] { width: 100%; }
+  #slider1Value { color: #FF6B6B; font-weight: bold; margin-left: 10px; }
+</style>
+</head>
+<body>
 
-JavaScript (EXACT MINIMAL WORKING PATTERN):
-At the VERY END of HTML, right before </body>, include EXACTLY this:
+<h1>Example Simulation</h1>
+<p>This is a working template.</p>
+
+<div class="control">
+  <label>Light Level</label>
+  <input type="range" id="slider1" min="0" max="100" value="50">
+  <span id="slider1Value">50</span>%
+</div>
+
+<button id="button1">Click Me</button>
 
 <script>
 try {
-  console.log('SCRIPT STARTED');
+  console.log('SCRIPT LOADED');
+  const slider1 = document.getElementById('slider1');
+  const slider1Value = document.getElementById('slider1Value');
+  const button1 = document.getElementById('button1');
 
-  const slider = document.getElementById('mySlider');
-  const display = document.getElementById('myValue');
+  console.log('Elements found - slider1:', !!slider1, 'value:', !!slider1Value, 'button:', !!button1);
 
-  console.log('Found slider:', slider ? 'YES' : 'NO');
-  console.log('Found display:', display ? 'YES' : 'NO');
-
-  if (slider && display) {
-    console.log('SETUP: Adding event listener to slider');
-
-    slider.addEventListener('input', function(e) {
-      console.log('EVENT: Slider input fired, value =', this.value);
-      display.textContent = this.value;
-    });
-
-    console.log('SETUP: Event listener attached successfully');
+  if (!slider1 || !slider1Value) {
+    alert('ERROR: Missing slider1 or slider1Value element!');
   } else {
-    console.error('ERROR: Elements not found!');
-    alert('Script Error: slider or display element missing');
+    slider1.addEventListener('input', function() {
+      console.log('SLIDER MOVED to', this.value);
+      slider1Value.textContent = this.value;
+    });
+    console.log('Slider listener attached');
+  }
+
+  if (button1) {
+    button1.addEventListener('click', function() {
+      console.log('BUTTON CLICKED');
+      alert('Button works!');
+    });
   }
 } catch (err) {
-  console.error('Script error:', err);
-  alert('Script Error: ' + err.message);
+  console.error('Setup error:', err);
+  alert('ERROR: ' + err.message);
 }
 </script>
+
+</body>
+</html>
+
+CRITICAL RULES:
+1. HTML element MUST have id="slider1" (or slider2, slider3 for multiple)
+2. JavaScript MUST call getElementById('slider1') - IDs MUST MATCH EXACTLY
+3. <script> tag MUST be at end of body, before </body>
+4. Include try/catch and alert() for errors
+5. Include console.log on every major step
 
 KEY POINTS:
 - addEventListener('input') fires on EVERY slider touch/movement
@@ -135,6 +163,23 @@ CRITICAL DEBUGGING CHECKLIST:
    If YES: basic slider works. Now add visual changes.
 6. Do SVG/visual elements change when slider moves?
    If NO: updateSimulation() must read slider.value and change SVG attributes
+
+HOW TO CUSTOMIZE THE EXAMPLE:
+- Change the <h1> topic name
+- Change the <p> description
+- Change the label text
+- Change the slider min/max/value ranges
+- Change colors in <style> (use the palette colors)
+- ADD more sliders by copying the control div with slider2, slider3, etc.
+- ADD more buttons with button2, button3, etc.
+- Change the button action inside addEventListener('click')
+- Change the updateSimulation() logic to update visual elements
+
+DO NOT CHANGE:
+- The id attribute names (must be slider1, slider2, button1, button2, etc.)
+- The getElementById() calls (must match the id attributes)
+- The event listener pattern
+- The script placement (end of body)
 
 SUBJECT PATTERNS:
 - Maths/Physics: animated function plotters, wave/particle sliders, geometric tools
