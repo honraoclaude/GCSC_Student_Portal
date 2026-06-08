@@ -22,20 +22,70 @@ INTERACTIVITY — CRITICAL REQUIREMENTS:
 - Store state in const/let variables and update them on every event
 - Every action must produce immediate visual feedback
 
-JAVASCRIPT IMPLEMENTATION RULES:
-- Wrap ALL code in a single DOMContentLoaded event listener
-- Use querySelector/querySelectorAll to get DOM elements (verify they exist with console.log)
-- Store references to all interactive elements in const variables at the top of the script
-- For each button: add addEventListener('click', function() { ... update state ... update display ... })
-- For each slider: add addEventListener('input', function() { ... update state ... update display ... })
-- Always update the DOM immediately after state changes
-- Use try/catch to catch any JavaScript errors and log them to console
+JAVASCRIPT IMPLEMENTATION RULES — MUST FOLLOW EXACTLY:
 
-TESTING YOUR CODE:
-- Before returning the HTML, mentally verify: can I click every button? Do all sliders work? Do values update?
-- If a button does nothing, the code is broken — fix it before returning
-- If a slider doesn't show the value, the code is broken — fix it before returning
-- Console.log initial values and event handlers to verify they load
+1. ELEMENT SETUP (inside DOMContentLoaded):
+   const slider = document.getElementById('mySlider');
+   const valueDisplay = document.getElementById('myValue');
+   const button = document.getElementById('myButton');
+   if (!slider || !valueDisplay || !button) { console.error('Missing elements'); return; }
+
+2. SLIDER HANDLING (100% REQUIRED — THIS MUST WORK):
+   slider.addEventListener('input', function() {
+     const value = parseFloat(this.value);
+     valueDisplay.textContent = value.toFixed(1); // Shows value immediately
+     updateSimulation(); // Call function to update any dependent visuals
+   });
+   // Also call updateSimulation() on page load to show initial value
+
+3. BUTTON HANDLING (100% REQUIRED — THIS MUST WORK):
+   button.addEventListener('click', function() {
+     // Do something visible: change color, update text, trigger animation
+     // ALWAYS change the DOM so user sees immediate feedback
+     updateSimulation();
+   });
+
+4. NEVER USE:
+   - onclick="..." inline attributes — MUST use addEventListener
+   - var — ONLY use const/let
+   - Relying on auto-wiring — ALWAYS test querySelector first
+
+5. ALWAYS INCLUDE AN updateSimulation() FUNCTION that:
+   - Reads all current state (slider.value, toggle state, etc.)
+   - Recalculates any derived values
+   - Updates ALL visible DOM elements that depend on state
+   - Can be called on every event
+
+CONCRETE EXAMPLE FOR SLIDER (COPY THIS PATTERN):
+```html
+<div>
+  <label>Light Intensity: <span id="lightValue">50</span>%</label>
+  <input type="range" id="lightSlider" min="0" max="100" value="50">
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const lightSlider = document.getElementById('lightSlider');
+  const lightValue = document.getElementById('lightValue');
+
+  lightSlider.addEventListener('input', function() {
+    lightValue.textContent = this.value;  // Update display IMMEDIATELY
+    updateSimulation();
+  });
+
+  function updateSimulation() {
+    const light = parseInt(lightSlider.value);
+    // Use light value to update diagram, color, animation, etc.
+  }
+});
+</script>
+```
+
+TESTING YOUR CODE (BEFORE YOU RETURN IT):
+- Mentally move a slider: does the number change? If NO, fix the addEventListener
+- Mentally click a button: does something visible happen? If NO, fix the addEventListener
+- Check: is updateSimulation() called on every event? If NO, add it
+- If ANY interaction doesn't produce immediate visual change, THE CODE IS BROKEN — FIX IT
 
 SUBJECT PATTERNS:
 - Maths/Physics: animated function plotters, wave/particle sliders, geometric tools
