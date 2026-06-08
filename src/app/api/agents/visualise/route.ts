@@ -296,51 +296,28 @@ Subject area: ${subject ?? "General GCSE"}`;
       );
     }
 
-    // GUARANTEED FIX: Always inject a universal initialization script at the very end
-    // This ensures ALL sliders and buttons work, regardless of what Claude generated
-    const universalFixScript = '<script>\n' +
-'(function() {\n' +
-'  function initializeInteractivity() {\n' +
-'    console.log("Universal init: Checking for sliders and buttons");\n' +
-'    const sliders = document.querySelectorAll("input[type=\\"range\\"]");\n' +
-'    console.log("Found " + sliders.length + " sliders");\n' +
-'    sliders.forEach(slider => {\n' +
-'      slider.addEventListener("input", function() {\n' +
-'        console.log("SLIDER EVENT: " + this.id + " = " + this.value);\n' +
-'        let display = document.getElementById(this.id + "Value");\n' +
-'        if (display) {\n' +
-'          display.textContent = this.value;\n' +
-'          console.log("Updated display: " + this.id + "Value");\n' +
-'        }\n' +
-'        if (!display) {\n' +
-'          const parent = this.closest(".slider-group") || this.closest("div");\n' +
-'          if (parent) {\n' +
-'            display = parent.querySelector(".value-number, [class*=\\"value\\"], span[class*=\\"display\\"]");\n' +
-'            if (display) {\n' +
-'              display.textContent = this.value;\n' +
-'              console.log("Updated display via parent search");\n' +
-'            }\n' +
-'          }\n' +
-'        }\n' +
-'      });\n' +
-'      slider.dispatchEvent(new Event("input"));\n' +
-'    });\n' +
-'    const buttons = document.querySelectorAll("button");\n' +
-'    console.log("Found " + buttons.length + " buttons");\n' +
-'    buttons.forEach(button => {\n' +
-'      button.addEventListener("click", function() {\n' +
-'        console.log("BUTTON CLICKED: " + (this.id || this.textContent));\n' +
-'      });\n' +
-'    });\n' +
-'    console.log("Universal initialization complete");\n' +
-'  }\n' +
-'  if (document.readyState === "loading") {\n' +
-'    document.addEventListener("DOMContentLoaded", initializeInteractivity);\n' +
-'  } else {\n' +
-'    initializeInteractivity();\n' +
-'  }\n' +
-'})();\n' +
-'</script>';
+    // GUARANTEED FIX: Inject a simple, bulletproof initialization script
+    // Minimal code to avoid escaping issues
+    const universalFixScript = `<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var sliders = document.querySelectorAll('input[type="range"]');
+  sliders.forEach(function(slider) {
+    slider.addEventListener('input', function() {
+      var displayId = this.id + 'Value';
+      var display = document.getElementById(displayId);
+      if (display) display.textContent = this.value;
+    });
+    slider.dispatchEvent(new Event('input'));
+  });
+  var buttons = document.querySelectorAll('button');
+  buttons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      console.log('Button clicked');
+    });
+  });
+  console.log('Universal initialization complete');
+});
+</script>`;
 
     // Insert BEFORE </body> (case-insensitive)
     const bodyEndIndex = html.toLowerCase().lastIndexOf('</body>');
