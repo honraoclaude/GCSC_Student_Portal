@@ -92,8 +92,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // CHANGE THE VISUAL: color goes from dark to bright
     const brightness = Math.round((light / 100) * 255);
-    sun.setAttribute('fill', `rgb(${brightness}, ${brightness}, 0)`);
-    console.log('Sun color changed to rgb(' + brightness + ',' + brightness + ',0)'); // DEBUG LINE
+    const color = 'rgb(' + brightness + ',' + brightness + ',0)';
+    sun.setAttribute('fill', color);
+    console.log('Sun color changed to: ' + color); // DEBUG LINE
   }
 
   // ATTACH EVENT LISTENER
