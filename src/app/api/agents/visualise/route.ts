@@ -303,9 +303,23 @@ document.addEventListener('DOMContentLoaded', function() {
   var sliders = document.querySelectorAll('input[type="range"]');
   sliders.forEach(function(slider) {
     slider.addEventListener('input', function() {
+      // Try multiple patterns to find the value display:
+      // 1. id + 'Value' (slider1 -> slider1Value)
+      // 2. id without 'Slider' + 'Value' (lightSlider -> lightValue)
       var displayId = this.id + 'Value';
       var display = document.getElementById(displayId);
-      if (display) display.textContent = this.value;
+
+      if (!display && this.id.endsWith('Slider')) {
+        // Try removing 'Slider' suffix: lightSlider -> light -> lightValue
+        var baseName = this.id.replace('Slider', '');
+        displayId = baseName + 'Value';
+        display = document.getElementById(displayId);
+      }
+
+      if (display) {
+        display.textContent = this.value;
+        console.log('Updated ' + displayId + ' to ' + this.value);
+      }
     });
     slider.dispatchEvent(new Event('input'));
   });
