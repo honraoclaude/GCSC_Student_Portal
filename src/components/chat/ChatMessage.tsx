@@ -1,5 +1,7 @@
 "use client";
 
+import { VisualiseButton } from "@/components/agents/VisualiseButton";
+
 interface ChatMessageProps {
   role: "user" | "assistant";
   content: string;
@@ -11,7 +13,7 @@ export function ChatMessage({ role, content, timestamp }: ChatMessageProps) {
 
   return (
     <div
-      className={`flex ${isUser ? "justify-end" : "justify-start"} animate-slideUp`}
+      className={`flex flex-col ${isUser ? "items-end" : "items-start"} animate-slideUp`}
     >
       <div
         className={`max-w-[70%] md:max-w-[60%] rounded-lg px-md py-sm md:px-lg md:py-md shadow-sm transition-all duration-200 ${
@@ -38,6 +40,12 @@ export function ChatMessage({ role, content, timestamp }: ChatMessageProps) {
           </p>
         )}
       </div>
+
+      {!isUser && content.length > 80 && !content.startsWith("Sorry, I encountered") && (
+        <div className="w-full max-w-2xl">
+          <VisualiseButton messageContent={content} />
+        </div>
+      )}
     </div>
   );
 }
