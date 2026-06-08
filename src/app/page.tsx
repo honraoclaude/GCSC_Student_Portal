@@ -19,7 +19,7 @@ export default async function Home() {
   return (
     <main className="w-full">
       {/* Hero Section */}
-      <section className="min-h-screen bg-gradient-to-b from-white to-blue-50 dark:from-slate-900 dark:to-blue-950 px-4 sm:px-6 lg:px-8 flex items-center">
+      <section className="min-h-screen bg-gradient-to-br from-white via-orange-50/30 to-red-50 dark:from-slate-900 dark:via-orange-950/20 dark:to-red-950 px-4 sm:px-6 lg:px-8 flex items-center">
         <div className="max-w-6xl mx-auto w-full">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Column - Text Content */}
@@ -27,7 +27,7 @@ export default async function Home() {
               <FadeIn duration={300}>
                 <SlideUp duration={300} delay={0}>
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-4 font-display">
-                    <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-red-600 via-orange-500 to-teal-500 dark:from-red-400 dark:via-orange-400 dark:to-teal-400 bg-clip-text text-transparent">
                       Your AI-Powered GCSE Success Platform
                     </span>
                   </h1>
@@ -57,7 +57,7 @@ export default async function Home() {
             {/* Right Column - Hero Image Placeholder */}
             <FadeIn duration={300} delay={300}>
               <div className="hidden lg:block w-full">
-                <div className="w-full aspect-square rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/20 dark:to-purple-900/20 border-2 border-blue-200 dark:border-blue-800 flex items-center justify-center">
+                <div className="w-full aspect-square rounded-lg bg-gradient-to-br from-orange-100 to-red-100 dark:from-orange-900/20 dark:to-red-900/20 border-2 border-orange-200 dark:border-orange-800 flex items-center justify-center">
                   <div className="text-center">
                     <div className="text-6xl mb-4">🎓</div>
                     <p className="text-slate-600 dark:text-slate-400">Hero Image</p>
@@ -70,7 +70,7 @@ export default async function Home() {
       </section>
 
       {/* Features Grid Section */}
-      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
+      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 to-orange-50 dark:from-slate-900 dark:to-orange-950 dark:bg-opacity-50">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16 font-display text-slate-900 dark:text-white">
@@ -100,7 +100,7 @@ export default async function Home() {
                 <Card
                   variant="default"
                   hoverable
-                  className="p-8 border-2 border-blue-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-500 hover:shadow-lg hover:scale-105 transition-all duration-200 h-full flex flex-col"
+                  className="p-8 border-2 border-orange-200 dark:border-orange-700/30 hover:border-orange-400 dark:hover:border-orange-500 hover:shadow-lg hover:scale-105 transition-all duration-200 h-full flex flex-col bg-white/70 dark:bg-slate-800/50 backdrop-blur-sm"
                 >
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 mb-6 flex items-center justify-center text-white text-xl">
                     {index === 0 && "🤖"}
@@ -127,7 +127,7 @@ export default async function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-blue-50 to-purple-50 dark:from-blue-900/10 dark:to-purple-900/10">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-teal-50/50 to-orange-50 dark:from-teal-900/10 dark:to-orange-900/10">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16 font-display text-slate-900 dark:text-white">
@@ -171,7 +171,7 @@ export default async function Home() {
       </section>
 
       {/* Statistics Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-red-50/50 to-white dark:from-red-900/10 dark:to-slate-900">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <h2 className="text-4xl sm:text-5xl font-bold text-center mb-16 font-display text-slate-900 dark:text-white">
@@ -187,7 +187,7 @@ export default async function Home() {
               { number: 98, label: "Success Rate", suffix: "%" },
             ].map((stat, index) => (
               <SlideUp key={index} delay={index * 100} duration={300}>
-                <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-2 border-blue-200 dark:border-slate-700 rounded-lg p-8 text-center">
+                <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border-2 border-orange-200 dark:border-orange-700/30 rounded-lg p-8 text-center">
                   <CounterStat
                     target={stat.number}
                     suffix={stat.suffix}

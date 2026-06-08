@@ -8,7 +8,7 @@ export function CTASection() {
   const router = useRouter();
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-700 dark:to-purple-700">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-red-600 via-orange-500 to-teal-500 dark:from-red-700 dark:via-orange-600 dark:to-teal-600">
       <div className="max-w-2xl mx-auto text-center">
         <FadeIn>
           <h2 className="text-4xl sm:text-5xl font-bold mb-4 font-display text-white">
@@ -29,7 +29,7 @@ export function CTASection() {
               type="email"
               placeholder="your.email@example.com"
               required
-              className="px-6 py-3 rounded-lg text-slate-900 placeholder-slate-500 border-2 border-transparent focus:border-blue-400 focus:outline-none transition-all"
+              className="px-6 py-3 rounded-lg text-slate-900 placeholder-slate-500 border-2 border-transparent focus:border-orange-300 focus:outline-none transition-all"
             />
             <Button
               variant="secondary"
