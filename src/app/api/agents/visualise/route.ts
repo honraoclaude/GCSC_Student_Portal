@@ -67,24 +67,52 @@ Examples of what must happen:
 - Growth slider → Plant SVG grows larger
 - ANY slider → the diagram colors, sizes, or positions CHANGE VISIBLY
 
-CONCRETE EXAMPLE FOR SLIDER (COPY THIS PATTERN):
+CONCRETE COMPLETE WORKING EXAMPLE (COPY THIS PATTERN EXACTLY):
 
-HTML Element:
+HTML:
 <input type="range" id="lightSlider" min="0" max="100" value="50">
 <span id="lightValue">50</span>%
+<svg id="mySvg"><circle id="sun" cx="50" cy="50" r="20" fill="#FFD700"></circle></svg>
 
-JavaScript Setup (MUST be inside DOMContentLoaded):
-const slider = document.getElementById('lightSlider');
-const display = document.getElementById('lightValue');
-slider.addEventListener('input', function() {
-  display.textContent = this.value;
+JavaScript (EXACT pattern — copy this):
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.getElementById('lightSlider');
+  const display = document.getElementById('lightValue');
+  const sun = document.getElementById('sun');
+
+  if (!slider || !display || !sun) {
+    console.error('Missing elements!');
+    return;
+  }
+
+  function updateSimulation() {
+    const light = parseInt(slider.value);
+    console.log('Slider moved to:', light); // DEBUG LINE
+    display.textContent = light;
+
+    // CHANGE THE VISUAL: color goes from dark to bright
+    const brightness = Math.round((light / 100) * 255);
+    sun.setAttribute('fill', `rgb(${brightness}, ${brightness}, 0)`);
+    console.log('Sun color changed to rgb(' + brightness + ',' + brightness + ',0)'); // DEBUG LINE
+  }
+
+  // ATTACH EVENT LISTENER
+  slider.addEventListener('input', function() {
+    console.log('Input event fired!'); // DEBUG LINE
+    updateSimulation();
+  });
+
+  // Call once on page load to show initial state
   updateSimulation();
 });
-function updateSimulation() {
-  const light = parseInt(slider.value);
-}
 
-KEY POINT: addEventListener('input') fires on EVERY slider movement. display.textContent updates IMMEDIATELY.
+KEY POINTS:
+- addEventListener('input') fires on EVERY slider touch/movement
+- updateSimulation() is called INSIDE the event listener
+- updateSimulation() reads slider.value, changes display.textContent, AND changes SVG attributes
+- setAttribute() changes the visual representation IMMEDIATELY
+- console.log() on every step so we can debug if it's not working
+- MUST call updateSimulation() once after setting up the listener (shows initial state)
 
 TESTING YOUR CODE (BEFORE YOU RETURN IT):
 - Mentally move a slider: does the NUMBER change? (Yes = good) AND does the DIAGRAM visually change? (colors shift, sizes change, SVG elements move)
