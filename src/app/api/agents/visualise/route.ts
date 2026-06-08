@@ -296,6 +296,60 @@ Subject area: ${subject ?? "General GCSE"}`;
       );
     }
 
+    // CRITICAL FIX: If Claude didn't add addEventListener, inject a working script
+    if (!html.includes("addEventListener")) {
+      const fixScript = `<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Auto-initialize all sliders
+  document.querySelectorAll('input[type="range"]').forEach(slider => {
+    slider.addEventListener('input', function() {
+      // Find corresponding value display (id + 'Value')
+      const displayId = this.id + 'Value';
+      const display = document.getElementById(displayId);
+      if (display) {
+        display.textContent = this.value;
+      }
+      console.log(this.id + ' moved to ' + this.value);
+    });
+  });
+
+  // Auto-initialize all buttons
+  document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', function() {
+      console.log('Button clicked: ' + (this.id || this.textContent));
+    });
+  });
+
+  console.log('Auto-initialized all sliders and buttons');
+});
+</script>`;
+
+      // Insert before </body>
+      html = html.replace('</body>', fixScript + '\n</body>');
+    }
+
+    // Also ensure DOMContentLoaded pattern exists or wrap script tags
+    if (!html.includes('DOMContentLoaded')) {
+      // Find the last <script> tag and wrap it if needed
+      const lastScriptEnd = html.lastIndexOf('</script>');
+      if (lastScriptEnd > -1) {
+        // Extract content between last <script> and </script>
+        const lastScriptStart = html.lastIndexOf('<script', lastScriptEnd);
+        if (lastScriptStart > -1) {
+          const scriptContent = html.substring(lastScriptStart + 8, lastScriptEnd).trim();
+          // If it doesn't start with DOMContentLoaded or try/window., wrap it
+          if (!scriptContent.includes('DOMContentLoaded') && !scriptContent.includes('window.addEventListener')) {
+            const wrappedContent = `document.addEventListener('DOMContentLoaded', function() {
+${scriptContent}
+});`;
+            html = html.substring(0, lastScriptStart) +
+                   '<script>\n' + wrappedContent + '\n</script>' +
+                   html.substring(lastScriptEnd + 9);
+          }
+        }
+      }
+    }
+
     return new Response(
       JSON.stringify({
         html: html,
