@@ -1,11 +1,16 @@
 'use client';
 
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function Header() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <header className="border-b border-slate-200/50 dark:border-slate-800/50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl sticky top-0 z-40">
@@ -31,12 +36,15 @@ export function Header() {
           </button>
 
           {/* Theme Toggle */}
-          <button
-            onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors duration-200"
-          >
-            <span className="text-xl">{theme === 'light' ? '🌙' : '☀️'}</span>
-          </button>
+          {mounted && (
+            <button
+              onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
+              className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors duration-200"
+              title={`Switch to ${resolvedTheme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              <span className="text-xl">{resolvedTheme === 'light' ? '🌙' : '☀️'}</span>
+            </button>
+          )}
 
           {/* User Profile */}
           <button
