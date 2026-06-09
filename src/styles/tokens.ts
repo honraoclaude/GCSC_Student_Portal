@@ -315,8 +315,11 @@ export function createTransition(property: string, duration: keyof typeof motion
  * @example shadowForMode('light', 'md')
  */
 export function shadowForMode(mode: 'light' | 'dark', level: keyof typeof shadows = 'md') {
-  const key = mode === 'dark' ? (`dark-${level}` as const) : (level as const)
-  return shadows[key]
+  if (mode === 'dark') {
+    const darkKey = `dark-${level}` as keyof typeof shadows
+    return shadows[darkKey]
+  }
+  return shadows[level]
 }
 
 /**
