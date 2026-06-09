@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
+import { PageTransition } from "@/components/layout/PageTransition";
 
 export default function PortalLayout({ children }: { children: ReactNode }) {
   return (
@@ -13,7 +14,7 @@ export default function PortalLayout({ children }: { children: ReactNode }) {
 
         <main className="flex-1 overflow-auto">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-            {children}
+            <PageTransition>{children}</PageTransition>
           </div>
         </main>
       </div>
