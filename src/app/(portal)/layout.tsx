@@ -4,10 +4,11 @@ import { Header } from "@/components/layout/Header";
 
 export default function PortalLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50 dark:from-slate-950 dark:via-blue-950/20 dark:to-slate-950">
+    <div className="h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-slate-50 dark:from-slate-950 dark:via-blue-950/20 dark:to-slate-950">
       <Sidebar />
 
-      <div className="flex flex-1 flex-col overflow-hidden">
+      {/* Main content with margin for fixed sidebar */}
+      <div className="flex flex-col h-screen lg:ml-64 transition-[margin] duration-300">
         <Header />
 
         <main className="flex-1 overflow-auto">
